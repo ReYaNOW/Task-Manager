@@ -1,5 +1,5 @@
 compilemessages:
-	django-admin compilemessages --ignore=.venv
+	django-admin compilemessages --ignore=.venv || true
 
 install:
 	poetry install
