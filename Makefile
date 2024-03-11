@@ -1,5 +1,10 @@
+compilemessages:
+	django-admin compilemessages --ignore=.venv
+
 install:
 	poetry install
+	make compilemessages
+
 
 dev:
 	python manage.py runserver
