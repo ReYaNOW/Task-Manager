@@ -10,6 +10,7 @@ dev:
 	python manage.py runserver
 
 start:
+	sudo apt-get install gettext
 	gunicorn task_manager.wsgi
 
 deploy_install:
