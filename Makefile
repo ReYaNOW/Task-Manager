@@ -3,7 +3,6 @@ compilemessages:
 
 install:
 	poetry install
-	make compilemessages
 
 dev:
 	python manage.py runserver
