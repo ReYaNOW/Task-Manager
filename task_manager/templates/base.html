@@ -4,19 +4,17 @@
 {% bootstrap_javascript %}
 
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   {% include 'includes/head.html' %}
   <body class="min-vh-100 d-flex flex-column">
     <header>
       {% include 'includes/nav.html' %}
     </header>
-    {% bootstrap_messages %}
-    <main class="flex-grow-1">
-      <div class="container-lg mt-3">
-        <h1>{% block title %}{% endblock %}</h1>
-        {% block content %} {% endblock %}
-      </div>
+    <main class="container wrapper flex-grow-1">
+      {% bootstrap_messages %}
+      <h1 class="my-4">{% block title %}{% endblock %}</h1>
+        {% block content %}{% endblock %}
     </main>
     {% include 'includes/footer.html' %}
   </body>

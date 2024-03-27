@@ -5,7 +5,7 @@ dev:
 	python manage.py runserver
 
 start:
-	python3 manage.py collectstatic
+	make collectstatic
 	gunicorn task_manager.wsgi
 
 lint:
@@ -30,3 +30,6 @@ makemigrations:
 
 migrate:
 	poetry run python manage.py migrate
+
+collectstatic:
+	python3 manage.py collectstatic

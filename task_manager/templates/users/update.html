@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load django_bootstrap5 %}
+
+{% block title %}{% trans 'Change user' %}{% endblock %}
+{% block content %}
+  <form action="{% url 'user_update' id=user.id%}" method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <input class="btn btn-primary" type="submit" value="{% trans 'Change' %}">
+  </form>
+{% endblock %}
