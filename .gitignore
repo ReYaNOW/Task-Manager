@@ -101,3 +101,6 @@ poetry.toml
 
 # LSP config files
 pyrightconfig.json
+
+# ignore static django files
+staticfiles/
