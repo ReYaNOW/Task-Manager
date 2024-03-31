@@ -32,7 +32,7 @@ class CustomTestCase(TestCase):
         self.test_user2 = User.objects.create_user(**test_user)
 
 
-class UsersCreate(TestCase):
+class UsersCreate(CustomTestCase, TestCase):
     def setUp(self):
         self.client = Client()
 
@@ -42,9 +42,10 @@ class UsersCreate(TestCase):
 
     def test_post(self):
         user_data = get_test_user_form_data()
+        before_creation = User.objects.count()
         response = self.client.post(reverse('user_create'), data=user_data)
 
-        self.assertTrue(User.objects.get(id=1))
+        self.assertTrue(User.objects.count() == before_creation + 1)
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('login'))
 
@@ -69,9 +70,9 @@ class UsersUpdate(CustomTestCase):
         self.assertRedirects(response, reverse('login'))
 
     def test_user_update_other_user(self):
-        self.client.force_login(self.test_user)
+        self.client.force_login(self.test_user2)
         response = self.client.get(
-            reverse('user_update', args=[self.test_user2.id])
+            reverse('user_update', args=[self.test_user.id])
         )
 
         self.assertEqual(response.status_code, 302)

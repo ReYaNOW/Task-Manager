@@ -4,14 +4,20 @@ from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy as _
 
 
-class CustomPermissionRequiredMixin(AccessMixin):
-    """Verify that the current user is authenticated."""
-
+class CustomLoginRequiredMixin(AccessMixin):
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             messages.error(request, _('Arent authorized'))
             return redirect('login')
-        elif kwargs['id'] != request.user.id:
+
+        return super().dispatch(request, *args, **kwargs)
+
+
+class CustomPermissionRequiredMixin(AccessMixin):
+    """Verify that the current user is authenticated."""
+
+    def dispatch(self, request, *args, **kwargs):
+        if kwargs.get('id') != request.user.id:
             messages.error(request, _('Dont have permissions to change'))
             return redirect('users_index')
 

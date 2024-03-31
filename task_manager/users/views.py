@@ -5,7 +5,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.utils.translation import gettext_lazy as _
 
-from task_manager.utils import CustomPermissionRequiredMixin
+from task_manager.utils import (
+    CustomLoginRequiredMixin,
+    CustomPermissionRequiredMixin,
+)
 from .forms import UserCreateForm, UserUpdateForm
 
 
@@ -30,13 +33,13 @@ class UserFormCreateView(View):
         return render(request, 'users/create.html', {'form': form})
 
 
-class UserFormUpdateView(CustomPermissionRequiredMixin, View):
+class UserFormUpdateView(
+    CustomLoginRequiredMixin, CustomPermissionRequiredMixin, View
+):
     def get(self, request, id):
         user = get_object_or_404(User, id=id)
         form = UserUpdateForm(instance=user)
-        return render(
-            request, 'users/update.html', {'form': form, 'user_id': id}
-        )
+        return render(request, 'users/update.html', {'form': form})
 
     def post(self, request, id):
         user = get_object_or_404(User, id=id)
@@ -47,12 +50,12 @@ class UserFormUpdateView(CustomPermissionRequiredMixin, View):
             logout(request)
             return redirect('users_index')
 
-        return render(
-            request, 'users/update.html', {'form': form, 'user_id': id}
-        )
+        return render(request, 'users/update.html', {'form': form})
 
 
-class UserFormDeleteView(CustomPermissionRequiredMixin, View):
+class UserFormDeleteView(
+    CustomLoginRequiredMixin, CustomPermissionRequiredMixin, View
+):
     def get(self, request, id):
         user = get_object_or_404(User, id=id)
         return render(request, 'users/delete.html', {'user': user})

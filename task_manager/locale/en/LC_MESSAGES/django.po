@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-19 01:05+0300\n"
+"POT-Creation-Date: 2024-03-29 19:40+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,55 +18,78 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\task_manager\settings.py:107
+#: .\task_manager\settings.py:109
 msgid "English"
 msgstr "English"
 
-#: .\task_manager\settings.py:108
+#: .\task_manager\settings.py:110
 msgid "Russian"
 msgstr "Russian"
+
+#: .\task_manager\statuses\forms.py:14
+msgid "status_name"
+msgstr "Name"
+
+#: .\task_manager\statuses\forms.py:21
+#, fuzzy
+#| msgid "passwd_help_message"
+msgid "status_exists_message"
+msgstr "A status with the same name already exists."
+
+#: .\task_manager\statuses\views.py:29
+msgid "Status successfully created"
+msgstr "Status successfully created"
+
+#: .\task_manager\statuses\views.py:48
+msgid "Status changed successfully"
+msgstr "Status changed successfully"
+
+#: .\task_manager\statuses\views.py:65
+msgid "Status successfully deleted"
+msgstr "Status successfully deleted"
 
 #: .\task_manager\templates\includes\head.html:7
 msgid "Hexlet Task Manager"
 msgstr "Hexlet Task Manager"
 
-#: .\task_manager\templates\includes\nav.html:5
+#: .\task_manager\templates\includes\nav.html:6
 msgid "Task manager"
 msgstr "Task manager"
 
-#: .\task_manager\templates\includes\nav.html:16
+#: .\task_manager\templates\includes\nav.html:18
 #: .\task_manager\templates\users\index.html:4
 msgid "Users"
 msgstr "Users"
 
-#: .\task_manager\templates\includes\nav.html:20
+#: .\task_manager\templates\includes\nav.html:22
+#: .\task_manager\templates\statuses\index.html:4
 msgid "Statuses"
 msgstr "Statuses"
 
-#: .\task_manager\templates\includes\nav.html:23
+#: .\task_manager\templates\includes\nav.html:25
 msgid "Tags"
 msgstr "Tags"
 
-#: .\task_manager\templates\includes\nav.html:26
+#: .\task_manager\templates\includes\nav.html:28
 msgid "Tasks"
 msgstr "Tasks"
 
-#: .\task_manager\templates\includes\nav.html:30
+#: .\task_manager\templates\includes\nav.html:33
 #: .\task_manager\templates\login.html:5
 #: .\task_manager\templates\login.html:10
 msgid "Login"
 msgstr "Login"
 
-#: .\task_manager\templates\includes\nav.html:33
+#: .\task_manager\templates\includes\nav.html:37
 #: .\task_manager\templates\users\create.html:5
 msgid "Sign Up"
 msgstr "Sign Up"
 
-#: .\task_manager\templates\includes\nav.html:39
+#: .\task_manager\templates\includes\nav.html:44
 msgid "Language"
 msgstr "Language"
 
-#: .\task_manager\templates\includes\nav.html:63
+#: .\task_manager\templates\includes\nav.html:82
 msgid "Logout"
 msgstr "Logout"
 
@@ -82,6 +105,48 @@ msgstr "Programming courses aimed practice application"
 msgid "Learn more"
 msgstr "Learn more"
 
+#: .\task_manager\templates\statuses\create.html:5
+#: .\task_manager\templates\statuses\index.html:6
+msgid "Create status"
+msgstr "Create status"
+
+#: .\task_manager\templates\statuses\create.html:10
+msgid "Create"
+msgstr "Create"
+
+#: .\task_manager\templates\statuses\delete.html:5
+msgid "Deleting status"
+msgstr "Deleting status"
+
+#: .\task_manager\templates\statuses\delete.html:7
+#: .\task_manager\templates\users\delete.html:7
+msgid "Wont to delete?"
+msgstr "Are you sure you want to delete"
+
+#: .\task_manager\templates\statuses\delete.html:11
+#: .\task_manager\templates\users\delete.html:11
+msgid "Yes, delete"
+msgstr "Yes, delete"
+
+#: .\task_manager\templates\statuses\index.html:11
+#: .\task_manager\users\forms.py:26
+msgid "Name"
+msgstr "Name"
+
+#: .\task_manager\templates\statuses\index.html:12
+#: .\task_manager\templates\users\index.html:12
+msgid "Date of creation"
+msgstr "Date of creation"
+
+#: .\task_manager\templates\statuses\update.html:5
+msgid "Change status"
+msgstr "Change status"
+
+#: .\task_manager\templates\statuses\update.html:10
+#: .\task_manager\templates\users\update.html:10
+msgid "Change"
+msgstr "Change"
+
 #: .\task_manager\templates\users\create.html:10
 msgid "Sign up"
 msgstr "Sign up"
@@ -89,14 +154,6 @@ msgstr "Sign up"
 #: .\task_manager\templates\users\delete.html:5
 msgid "Deleting user"
 msgstr "Deleting user"
-
-#: .\task_manager\templates\users\delete.html:7
-msgid "Wont to delete?"
-msgstr "Are you sure you want to delete"
-
-#: .\task_manager\templates\users\delete.html:11
-msgid "Yes, delete"
-msgstr "Yes, delete"
 
 #: .\task_manager\templates\users\index.html:10
 msgid "User name"
@@ -106,17 +163,9 @@ msgstr "User name"
 msgid "Full name"
 msgstr "Full name"
 
-#: .\task_manager\templates\users\index.html:12
-msgid "Date of creation"
-msgstr "Date of creation"
-
 #: .\task_manager\templates\users\update.html:5
 msgid "Change user"
 msgstr "Change user"
-
-#: .\task_manager\templates\users\update.html:10
-msgid "Change"
-msgstr "Change"
 
 #: .\task_manager\users\forms.py:9
 msgid "user_name_validation_error"
@@ -131,10 +180,6 @@ msgstr "Password"
 #: .\task_manager\users\forms.py:18
 msgid "passwd_help_message"
 msgstr "Your password must contain at least 3 characters."
-
-#: .\task_manager\users\forms.py:26
-msgid "Name"
-msgstr "Name"
 
 #: .\task_manager\users\forms.py:27
 msgid "Surname"
@@ -151,28 +196,28 @@ msgstr ""
 "symbols @/./+/-"
 
 #: .\task_manager\users\forms.py:39
-msgid "A user with the same name already exists."
+msgid "user_exists_message"
 msgstr "A user with the same name already exists."
 
-#: .\task_manager\users\views.py:27
+#: .\task_manager\users\views.py:30
 msgid "Sign up success"
 msgstr "User has been successfully registered"
 
-#: .\task_manager\users\views.py:46
+#: .\task_manager\users\views.py:49
 msgid "Edit success"
 msgstr "User has been successfully changed"
 
-#: .\task_manager\users\views.py:65
+#: .\task_manager\users\views.py:68
 msgid "Delete success"
 msgstr "User has been deleted successfully"
 
-#: .\task_manager\utils.py:13
-msgid "Dont have permissions to change"
-msgstr "You are not authorized to change other user's settings."
-
-#: .\task_manager\utils.py:16
+#: .\task_manager\utils.py:10
 msgid "Arent authorized"
 msgstr "You are not signed in! Please log in."
+
+#: .\task_manager\utils.py:21
+msgid "Dont have permissions to change"
+msgstr "You are not authorized to change other user's settings."
 
 #: .\task_manager\views.py:16
 msgid "Logged_in"

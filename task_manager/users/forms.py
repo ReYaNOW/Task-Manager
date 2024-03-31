@@ -36,7 +36,7 @@ class UserCreateForm(UserCreationForm):
 
         error_messages = {
             'username': {
-                'unique': _('A user with the same name already exists.'),
+                'unique': _('user_exists_message'),
             },
         }
 
