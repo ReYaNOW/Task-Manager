@@ -25,7 +25,7 @@ messages:
 compilemessages:
 	django-admin compilemessages --ignore=.venv || true
 
-makemigrations:
+migrations:
 	poetry run python manage.py makemigrations
 
 migrate:
