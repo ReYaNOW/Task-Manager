@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-29 19:40+0300\n"
+"POT-Creation-Date: 2024-04-12 15:08+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,35 +18,76 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\task_manager\settings.py:109
+#: .\task_manager\settings.py:110
 msgid "English"
 msgstr "English"
 
-#: .\task_manager\settings.py:110
+#: .\task_manager\settings.py:111
 msgid "Russian"
 msgstr "Russian"
 
-#: .\task_manager\statuses\forms.py:14
+#: .\task_manager\statuses\forms.py:13
 msgid "status_name"
 msgstr "Name"
 
-#: .\task_manager\statuses\forms.py:21
-#, fuzzy
-#| msgid "passwd_help_message"
+#: .\task_manager\statuses\forms.py:20
 msgid "status_exists_message"
 msgstr "A status with the same name already exists."
 
-#: .\task_manager\statuses\views.py:29
+#: .\task_manager\statuses\views.py:28
 msgid "Status successfully created"
 msgstr "Status successfully created"
 
-#: .\task_manager\statuses\views.py:48
+#: .\task_manager\statuses\views.py:47
 msgid "Status changed successfully"
 msgstr "Status changed successfully"
 
-#: .\task_manager\statuses\views.py:65
+#: .\task_manager\statuses\views.py:64
 msgid "Status successfully deleted"
 msgstr "Status successfully deleted"
+
+#: .\task_manager\tasks\forms.py:19
+msgid "task_exists_message"
+msgstr "A task with the same name already exists."
+
+#: .\task_manager\tasks\forms.py:25 .\task_manager\tasks\models.py:20
+#: .\task_manager\templates\tasks\index.html:24
+msgid "Status"
+msgstr "Status"
+
+#: .\task_manager\tasks\forms.py:28 .\task_manager\tasks\models.py:25
+#: .\task_manager\templates\tasks\index.html:26
+msgid "Executor"
+msgstr "Executor"
+
+#: .\task_manager\tasks\forms.py:31
+msgid "only_own_tasks"
+msgstr "Only own tasks"
+
+#: .\task_manager\tasks\models.py:10
+msgid "name"
+msgstr "Surname"
+
+#: .\task_manager\tasks\models.py:12
+msgid "Description"
+msgstr "Description"
+
+#: .\task_manager\tasks\models.py:16
+#: .\task_manager\templates\tasks\index.html:25
+msgid "Author"
+msgstr "Author"
+
+#: .\task_manager\tasks\views.py:52
+msgid "Task successfully created"
+msgstr "Task successfully created"
+
+#: .\task_manager\tasks\views.py:68
+msgid "Task changed successfully"
+msgstr "Task changed successfully"
+
+#: .\task_manager\tasks\views.py:82
+msgid "Task successfully deleted"
+msgstr "Task successfully deleted"
 
 #: .\task_manager\templates\includes\head.html:7
 msgid "Hexlet Task Manager"
@@ -71,6 +112,7 @@ msgid "Tags"
 msgstr "Tags"
 
 #: .\task_manager\templates\includes\nav.html:28
+#: .\task_manager\templates\tasks\index.html:5
 msgid "Tasks"
 msgstr "Tasks"
 
@@ -111,6 +153,7 @@ msgid "Create status"
 msgstr "Create status"
 
 #: .\task_manager\templates\statuses\create.html:10
+#: .\task_manager\templates\tasks\create.html:10
 msgid "Create"
 msgstr "Create"
 
@@ -124,6 +167,7 @@ msgid "Wont to delete?"
 msgstr "Are you sure you want to delete"
 
 #: .\task_manager\templates\statuses\delete.html:11
+#: .\task_manager\templates\tasks\delete.html:11
 #: .\task_manager\templates\users\delete.html:11
 msgid "Yes, delete"
 msgstr "Yes, delete"
@@ -134,6 +178,7 @@ msgid "Name"
 msgstr "Name"
 
 #: .\task_manager\templates\statuses\index.html:12
+#: .\task_manager\templates\tasks\index.html:27
 #: .\task_manager\templates\users\index.html:12
 msgid "Date of creation"
 msgstr "Date of creation"
@@ -143,9 +188,35 @@ msgid "Change status"
 msgstr "Change status"
 
 #: .\task_manager\templates\statuses\update.html:10
+#: .\task_manager\templates\tasks\update.html:10
 #: .\task_manager\templates\users\update.html:10
 msgid "Change"
 msgstr "Change"
+
+#: .\task_manager\templates\tasks\create.html:5
+#: .\task_manager\templates\tasks\index.html:8
+#, fuzzy
+#| msgid "Create status"
+msgid "Create task"
+msgstr "Create status"
+
+#: .\task_manager\templates\tasks\delete.html:5
+#, fuzzy
+#| msgid "Deleting status"
+msgid "Deleting task"
+msgstr "Deleting status"
+
+#: .\task_manager\templates\tasks\delete.html:7
+#, fuzzy
+#| msgid "Wont to delete?"
+msgid "Wont to delete task?"
+msgstr "Are you sure you want to delete"
+
+#: .\task_manager\templates\tasks\update.html:5
+#, fuzzy
+#| msgid "Change status"
+msgid "Change task"
+msgstr "Change status"
 
 #: .\task_manager\templates\users\create.html:10
 msgid "Sign up"

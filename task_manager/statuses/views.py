@@ -1,12 +1,11 @@
 from django.contrib import messages
-from django.contrib.auth import logout
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views import View
 from django.utils.translation import gettext_lazy as _
+from django.views import View
 
 from task_manager.utils import CustomLoginRequiredMixin
-from .models import Status
 from .forms import StatusCreateForm
+from .models import Status
 
 
 class IndexView(CustomLoginRequiredMixin, View):
@@ -56,7 +55,7 @@ class StatusFormUpdateView(CustomLoginRequiredMixin, View):
 class StatusFormDeleteView(CustomLoginRequiredMixin, View):
     def get(self, request, id):
         status = get_object_or_404(Status, id=id)
-        return render(request, 'statuses/delete.html', {'user': status})
+        return render(request, 'statuses/delete.html', {'status': status})
     
     def post(self, request, id):
         status = get_object_or_404(Status, id=id)
