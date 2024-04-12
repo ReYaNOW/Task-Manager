@@ -4,9 +4,9 @@
 
 {% block title %}{% trans 'Change task' %}{% endblock %}
 {% block content %}
-  <form action="{% url 'task_update' id=task.id%}" method="post">
+  <form method="post">
     {% csrf_token %}
     {% bootstrap_form form %}
-    <input class="btn btn-primary" type="submit" value="{% trans 'Change' %}">
+    {% include 'includes/submit_button.html' %}
   </form>
 {% endblock %}

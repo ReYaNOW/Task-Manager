@@ -208,8 +208,6 @@ msgid "Deleting task"
 msgstr "Удаление задачи"
 
 #: .\task_manager\templates\tasks\delete.html:7
-#, fuzzy
-#| msgid "Wont to delete?"
 msgid "Wont to delete task?"
 msgstr "Вы уверены, что хотите удалить"
 

@@ -1,0 +1,14 @@
+{% load i18n %}
+
+{% if 'users/create' in request.path %}
+  <input class="btn btn-primary" type="submit"
+         value="{% trans 'Sign up' %}">
+
+{% elif 'create' in request.path %}
+  <input class="btn btn-primary" type="submit"
+         value="{% trans 'Create' %}">
+
+{% else %}
+  <input class="btn btn-primary" type="submit"
+         value="{% trans 'Change' %}">
+{% endif %}
