@@ -1,65 +1,55 @@
-from django.contrib import messages
-from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.messages.views import SuccessMessageMixin
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
-from django.views import View
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 
 from task_manager.utils import CustomLoginRequiredMixin
 from .forms import StatusCreateForm
 from .models import Status
 
 
-class IndexView(CustomLoginRequiredMixin, View):
-    def get(self, request):
-        statuses = Status.objects.all()
-        return render(
-            request,
-            'index_pages/statuses_index.html',
-            context={'statuses': statuses},
-        )
+class IndexView(ListView):
+    template_name = 'index_pages/statuses_index.html'
+
+    model = Status
+    context_object_name = 'statuses'
 
 
-class StatusFormCreateView(CustomLoginRequiredMixin, View):
-    def get(self, request):
-        form = StatusCreateForm()
-        return render(request, 'crud_parts/create.html', {'form': form})
+class StatusFormCreateView(SuccessMessageMixin, CreateView):
+    template_name = 'crud_parts/create.html'
+    extra_context = {'title': _('Create status')}
 
-    def post(self, request):
-        form = StatusCreateForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, _('Status successfully created'))
-            return redirect('statuses_index')
+    model = Status
+    form_class = StatusCreateForm
 
-        return render(request, 'crud_parts/create.html', {'form': form})
+    success_url = reverse_lazy('statuses_index')
+    success_message = _('Status successfully created')
 
 
-class StatusFormUpdateView(CustomLoginRequiredMixin, View):
-    def get(self, request, id):
-        status = get_object_or_404(Status, id=id)
-        form = StatusCreateForm(instance=status)
-        return render(
-            request, 'crud_parts/update.html', {'form': form, 'id': id}
-        )
+class StatusFormUpdateView(
+    CustomLoginRequiredMixin,
+    SuccessMessageMixin,
+    UpdateView,
+):
+    template_name = 'crud_parts/update.html'
+    extra_context = {'title': _('Change status')}
 
-    def post(self, request, id):
-        status = get_object_or_404(Status, id=id)
-        form = StatusCreateForm(request.POST, instance=status)
-        if form.is_valid():
-            form.save()
-            messages.success(request, _('Status changed successfully'))
-            return redirect('statuses_index')
+    model = Status
+    form_class = StatusCreateForm
 
-        return render(request, 'crud_parts/update.html', {'form': form})
+    success_url = reverse_lazy('statuses_index')
+    success_message = _('Status changed successfully')
 
 
-class StatusFormDeleteView(CustomLoginRequiredMixin, View):
-    def get(self, request, id):
-        status = get_object_or_404(Status, id=id)
-        return render(request, 'crud_parts/delete.html', {'status': status})
+class StatusFormDeleteView(
+    CustomLoginRequiredMixin,
+    SuccessMessageMixin,
+    DeleteView,
+):
+    template_name = 'crud_parts/delete.html'
+    extra_context = {'title': _('Deleting status')}
 
-    def post(self, request, id):
-        status = get_object_or_404(Status, id=id)
-        if status:
-            status.delete()
-            messages.success(request, _('Status successfully deleted'))
-        return redirect('statuses_index')
+    model = Status
+
+    success_url = reverse_lazy('statuses_index')
+    success_message = _('Status successfully deleted')

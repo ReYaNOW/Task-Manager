@@ -17,7 +17,7 @@ class CustomPermissionRequiredMixin(AccessMixin):
     """Verify that the current user is authenticated."""
 
     def dispatch(self, request, *args, **kwargs):
-        if kwargs.get('id') != request.user.id:
+        if kwargs.get('pk') != request.user.id:
             messages.error(request, _('Dont have permissions to change'))
             return redirect('users_index')
 

@@ -1,3 +1,12 @@
+from django.urls import reverse_lazy
+from django.contrib.messages.views import SuccessMessageMixin
+from django.views.generic import (
+    CreateView,
+    ListView,
+    UpdateView,
+    DeleteView,
+    DetailView,
+)
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
@@ -39,59 +48,47 @@ class IndexView(CustomLoginRequiredMixin, View):
         )
 
 
-class TaskView(CustomLoginRequiredMixin, View):
-    def get(self, request, id):
-        task = get_object_or_404(Task, id=id)
-
-        return render(
-            request,
-            'crud_parts/task_read.html',
-            context={'task': task},
-        )
+class TaskView(CustomLoginRequiredMixin, DetailView):
+    template_name = 'crud_parts/task_read.html'
+    extra_context = {'title': _('Task view')}
+    model = Task
 
 
-class TaskFormCreateView(CustomLoginRequiredMixin, View):
-    def get(self, request):
-        print(1)
-        form = TaskCreateForm()
-        return render(request, 'crud_parts/create.html', {'form': form})
+class TaskFormCreateView(SuccessMessageMixin, CreateView):
+    template_name = 'crud_parts/create.html'
+    extra_context = {'title': _('Create status')}
 
-    def post(self, request):
-        form = TaskCreateForm(request.POST)
-        form.instance.author = User.objects.get(id=self.request.user.id)
-        if form.is_valid():
-            form.save()
-            messages.success(request, _('Task successfully created'))
-            return redirect('tasks_index')
-        return render(request, 'crud_parts/create.html', {'form': form})
+    model = Task
+    form_class = TaskCreateForm
+
+    success_url = reverse_lazy('tasks_index')
+    success_message = _('Task successfully created')
 
 
-class TaskFormUpdateView(CustomLoginRequiredMixin, View):
-    def get(self, request, id):
-        task = get_object_or_404(Task, id=id)
-        form = TaskCreateForm(instance=task)
-        return render(
-            request, 'crud_parts/update.html', {'task': task, 'form': form}
-        )
+class TaskFormUpdateView(
+    CustomLoginRequiredMixin,
+    SuccessMessageMixin,
+    UpdateView,
+):
+    template_name = 'crud_parts/update.html'
+    extra_context = {'title': _('Change task')}
 
-    def post(self, request, id):
-        task = get_object_or_404(Task, id=id)
-        form = TaskCreateForm(request.POST, instance=task)
-        if form.is_valid():
-            form.save()
-            messages.success(request, _('Task changed successfully'))
-            return redirect('tasks_index')
-        return render(request, 'crud_parts/update.html', {'form': form})
+    model = Task
+    form_class = TaskCreateForm
+
+    success_url = reverse_lazy('tasks_index')
+    success_message = _('Task changed successfully')
 
 
-class TaskFormDeleteView(CustomLoginRequiredMixin, View):
-    def get(self, request, id):
-        task = get_object_or_404(Task, id=id)
-        return render(request, 'crud_parts/delete.html', {'task': task})
+class TaskFormDeleteView(
+    CustomLoginRequiredMixin,
+    SuccessMessageMixin,
+    DeleteView,
+):
+    template_name = 'crud_parts/delete.html'
+    extra_context = {'title': _('Deleting task')}
 
-    def post(self, request, id):
-        task = get_object_or_404(Task, id=id)
-        if task:
-            task.delete()
-            messages.success(request, _('Task successfully deleted'))
-        return redirect('tasks_index')
+    model = Task
+
+    success_url = reverse_lazy('tasks_index')
+    success_message = _('Task successfully deleted')

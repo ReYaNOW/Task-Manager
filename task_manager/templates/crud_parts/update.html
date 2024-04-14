@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load django_bootstrap5 %}
 
-{% block title %}{% trans 'Change task' %}{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 {% block content %}
   <form method="post">
     {% csrf_token %}

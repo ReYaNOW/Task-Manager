@@ -1,9 +1,8 @@
-from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth import logout
-from django.shortcuts import render, get_object_or_404, redirect
-from django.views import View
+from django.contrib.messages.views import SuccessMessageMixin
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 
 from task_manager.utils import (
     CustomLoginRequiredMixin,
@@ -12,64 +11,50 @@ from task_manager.utils import (
 from .forms import UserCreateForm, UserUpdateForm
 
 
-class IndexView(View):
-    def get(self, request):
-        users = User.objects.all()
-        return render(
-            request, 'index_pages/users_index.html', context={'users': users}
-        )
+class IndexView(ListView):
+    template_name = 'index_pages/users_index.html'
+
+    model = User
+    context_object_name = 'users'
 
 
-class UserFormCreateView(View):
-    def get(self, request):
-        form = UserCreateForm()
-        return render(request, 'crud_parts/create.html', {'form': form})
+class UserFormCreateView(SuccessMessageMixin, CreateView):
+    template_name = 'crud_parts/create.html'
+    extra_context = {'title': _('Sign Up')}
 
-    def post(self, request):
-        form = UserCreateForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, _('Sign up success'))
-            return redirect('login')
+    model = User
+    form_class = UserCreateForm
 
-        return render(
-            request,
-            'crud_parts/create.html',
-            {'form': form, 'button_name': _('Sign up')},
-        )
+    success_url = reverse_lazy('login')
+    success_message = _('Sign up success')
 
 
 class UserFormUpdateView(
-    CustomLoginRequiredMixin, CustomPermissionRequiredMixin, View
+    CustomLoginRequiredMixin,
+    CustomPermissionRequiredMixin,
+    SuccessMessageMixin,
+    UpdateView,
 ):
-    def get(self, request, id):
-        user = get_object_or_404(User, id=id)
-        form = UserUpdateForm(instance=user)
-        return render(request, 'crud_parts/update.html', {'form': form})
+    template_name = 'crud_parts/update.html'
+    extra_context = {'title': _('Change user')}
 
-    def post(self, request, id):
-        user = get_object_or_404(User, id=id)
-        form = UserUpdateForm(request.POST, instance=user)
-        if form.is_valid():
-            form.save()
-            messages.success(request, _('Edit success'))
-            logout(request)
-            return redirect('users_index')
+    model = User
+    form_class = UserUpdateForm
 
-        return render(request, 'crud_parts/update.html', {'form': form})
+    success_url = reverse_lazy('users_index')
+    success_message = _('Edit success')
 
 
 class UserFormDeleteView(
-    CustomLoginRequiredMixin, CustomPermissionRequiredMixin, View
+    CustomLoginRequiredMixin,
+    CustomPermissionRequiredMixin,
+    SuccessMessageMixin,
+    DeleteView,
 ):
-    def get(self, request, id):
-        user = get_object_or_404(User, id=id)
-        return render(request, 'crud_parts/delete.html', {'user': user})
+    template_name = 'crud_parts/delete.html'
+    extra_context = {'title': _('Deleting user')}
 
-    def post(self, request, id):
-        user = get_object_or_404(User, id=id)
-        if user:
-            logout(request)
-            user.delete()
-            messages.success(request, _('Delete success'))
-        return redirect('users_index')
+    model = User
+
+    success_url = reverse_lazy('users_index')
+    success_message = _('Delete success')
