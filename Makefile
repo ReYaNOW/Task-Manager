@@ -2,10 +2,9 @@ install:
 	poetry install
 
 dev:
-	python manage.py runserver
+	poetry run manage.py runserver
 
 start:
-	make collectstatic
 	gunicorn task_manager.wsgi
 
 shell:
@@ -15,7 +14,12 @@ lint:
 	poetry run flake8 task_manager
 
 test:
-	python3 manage.py test
+	poetry run python3 manage.py test
+
+test-coverage:
+	poetry run coverage run manage.py test
+	poetry run coverage report -m --include=task_manager/* --omit=task_manager/settings.py,*/migrations/*,*/tests/*,tests.py
+	poetry run coverage xml --include=task_manager/* --omit=task_manager/settings.py,*/migrations/*,*/tests/*,tests.py
 
 check:
 	make lint
