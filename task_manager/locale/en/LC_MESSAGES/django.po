@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-18 13:59+0300\n"
+"POT-Creation-Date: 2024-04-18 19:09+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -92,7 +92,7 @@ msgstr "Status successfully deleted"
 msgid "status_in_usage"
 msgstr "Cannot remove status because it is in use"
 
-#: .\task_manager\tasks\filter.py:10 .\task_manager\tasks\models.py:36
+#: .\task_manager\tasks\filter.py:10
 msgid "Label"
 msgstr "Label"
 
@@ -100,7 +100,13 @@ msgstr "Label"
 msgid "only_personal_tasks"
 msgstr "Only own tasks"
 
-#: .\task_manager\tasks\forms.py:20
+#: .\task_manager\tasks\forms.py:16 .\task_manager\tasks\models.py:28
+#: .\task_manager\templates\crud_parts\task_read.html:20
+#: .\task_manager\templates\index_pages\tasks_index.html:25
+msgid "Executor"
+msgstr "Executor"
+
+#: .\task_manager\tasks\forms.py:28
 msgid "task_exists_message"
 msgstr "A task with the same name already exists."
 
@@ -124,11 +130,10 @@ msgstr "Author"
 msgid "Status"
 msgstr "Status"
 
-#: .\task_manager\tasks\models.py:28
-#: .\task_manager\templates\crud_parts\task_read.html:20
-#: .\task_manager\templates\index_pages\tasks_index.html:25
-msgid "Executor"
-msgstr "Executor"
+#: .\task_manager\tasks\models.py:36
+#: .\task_manager\templates\index_pages\labels_index.html:4
+msgid "Labels"
+msgstr "Labels"
 
 #: .\task_manager\tasks\tests.py:112 .\task_manager\tasks\views.py:82
 msgid "task_no_permissions"
@@ -252,10 +257,6 @@ msgstr "Programming courses aimed practice application"
 msgid "Learn more"
 msgstr "Learn more"
 
-#: .\task_manager\templates\index_pages\labels_index.html:4
-msgid "Labels"
-msgstr "Labels"
-
 #: .\task_manager\templates\index_pages\labels_index.html:26
 #: .\task_manager\templates\index_pages\statuses_index.html:26
 #: .\task_manager\templates\index_pages\tasks_index.html:42
@@ -297,13 +298,13 @@ msgstr "Surname"
 msgid "Nickname"
 msgstr "Nickname"
 
-#: .\task_manager\users\forms.py:35
+#: .\task_manager\users\forms.py:38
 msgid "username_help_message"
 msgstr ""
 "Required field. No more than 150 characters. Only letters, numbers and "
 "symbols @/./+/-"
 
-#: .\task_manager\users\forms.py:39
+#: .\task_manager\users\forms.py:42
 msgid "user_exists_message"
 msgstr "A user with the same name already exists."
 
