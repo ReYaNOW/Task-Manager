@@ -7,6 +7,7 @@ from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from task_manager.utils import (
     CustomLoginRequiredMixin,
     CustomPermissionRequiredMixin,
+    ProtectedErrorHandlerMixin,
 )
 from .forms import UserCreateForm, UserUpdateForm
 
@@ -43,12 +44,16 @@ class UserFormUpdateView(
 
     success_url = reverse_lazy('users_index')
     success_message = _('Edit success')
+    
+    permission_url = reverse_lazy('users_index')
+    permission_message = _('Dont have permissions to change')
 
 
 class UserFormDeleteView(
     CustomLoginRequiredMixin,
     CustomPermissionRequiredMixin,
     SuccessMessageMixin,
+    ProtectedErrorHandlerMixin,
     DeleteView,
 ):
     template_name = 'crud_parts/delete.html'
@@ -58,3 +63,9 @@ class UserFormDeleteView(
 
     success_url = reverse_lazy('users_index')
     success_message = _('Delete success')
+    
+    permission_url = reverse_lazy('users_index')
+    permission_message = _('Dont have permissions to change')
+    
+    protected_url = reverse_lazy('users_index')
+    protected_message = _('protected_user')

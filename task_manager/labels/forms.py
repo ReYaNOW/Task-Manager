@@ -1,12 +1,12 @@
 from django.utils.translation import gettext_lazy as _
 from django import forms
 
-from .models import Status
+from .models import Label
 
 
-class StatusCreateForm(forms.ModelForm):
+class LabelCreateForm(forms.ModelForm):
     class Meta:
-        model = Status
+        model = Label
         fields = ['name']
 
         labels = {
@@ -17,5 +17,5 @@ class StatusCreateForm(forms.ModelForm):
         }
 
         error_messages = {
-            'name': {'unique': _('status_exists_message')},
+            'name': {'unique': _('label_exists_message')},
         }

@@ -1,10 +1,11 @@
 from django.contrib import messages
-from django.contrib.auth.mixins import AccessMixin
+from django.db.models import ProtectedError
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy as _
 
 
-class CustomLoginRequiredMixin(AccessMixin):
+class CustomLoginRequiredMixin(LoginRequiredMixin):
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             messages.error(request, _('Arent authorized'))
@@ -13,15 +14,21 @@ class CustomLoginRequiredMixin(AccessMixin):
         return super().dispatch(request, *args, **kwargs)
 
 
-class CustomPermissionRequiredMixin(AccessMixin):
-    """Verify that the current user is authenticated."""
+class CustomPermissionRequiredMixin(UserPassesTestMixin):
+    permission_url = None
+    permission_message = None
 
-    def dispatch(self, request, *args, **kwargs):
-        if kwargs.get('pk') != request.user.id:
-            messages.error(request, _('Dont have permissions to change'))
-            return redirect('users_index')
+    def test_func(self):
+        return self.get_object() == self.request.user
 
-        return super().dispatch(request, *args, **kwargs)
+    def handle_no_permission(self):
+        messages.error(self.request, self.permission_message)
+        return redirect(self.permission_url)
+
+
+class CheckAuthorMixin(CustomPermissionRequiredMixin):
+    def test_func(self):
+        return self.get_object().author == self.request.user
 
 
 class CustomMessageMixin:
@@ -39,3 +46,15 @@ class CustomMessageMixin:
 
     def get_flash_message(self, cleaned_data):
         return self.flash_message % cleaned_data
+
+
+class ProtectedErrorHandlerMixin:
+    protected_message = None
+    protected_url = None
+
+    def post(self, request, *args, **kwargs):
+        try:
+            return super().post(request, *args, **kwargs)
+        except ProtectedError:
+            messages.error(request, self.protected_message)
+            return redirect(self.protected_url)

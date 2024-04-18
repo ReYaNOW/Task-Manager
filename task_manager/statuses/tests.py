@@ -91,4 +91,4 @@ class StatusDelete(CustomTestCase):
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('statuses_index'))
         with self.assertRaises(ObjectDoesNotExist):
-            User.objects.get(id=self.test_status2.id)
+            Status.objects.get(id=self.test_status2.id)

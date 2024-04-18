@@ -4,7 +4,12 @@
 
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
-  <p>{% trans 'Wont to delete?' %} {{ object.get_full_name }}?</p>
+  <p>{% trans 'Wont to delete?' %}
+    {% if object.get_full_name %}
+      {{ object.get_full_name }}?
+    {% else %}
+      {{ object.name }}?
+    {% endif %}</p>
   <form method="post">
     {% csrf_token %}
     <input class="btn btn-danger" type="submit"

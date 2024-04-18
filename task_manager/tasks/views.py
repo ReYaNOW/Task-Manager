@@ -1,19 +1,20 @@
-from django.urls import reverse_lazy
+from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
+from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
+from django.views import View
 from django.views.generic import (
     CreateView,
-    ListView,
     UpdateView,
     DeleteView,
     DetailView,
 )
-from django.contrib import messages
-from django.contrib.auth.models import User
-from django.shortcuts import render, get_object_or_404, redirect
-from django.utils.translation import gettext_lazy as _
-from django.views import View
 
-from task_manager.utils import CustomLoginRequiredMixin
+from task_manager.utils import (
+    CustomLoginRequiredMixin,
+    CheckAuthorMixin,
+)
 from .forms import TaskCreateForm, SearchForm
 from .models import Task
 
@@ -54,15 +55,21 @@ class TaskView(CustomLoginRequiredMixin, DetailView):
     model = Task
 
 
-class TaskFormCreateView(SuccessMessageMixin, CreateView):
+class TaskFormCreateView(
+    SuccessMessageMixin, CustomLoginRequiredMixin, CreateView
+):
     template_name = 'crud_parts/create.html'
-    extra_context = {'title': _('Create status')}
+    extra_context = {'title': _('Create task')}
 
     model = Task
     form_class = TaskCreateForm
 
     success_url = reverse_lazy('tasks_index')
     success_message = _('Task successfully created')
+
+    def form_valid(self, form):
+        form.instance.author = User.objects.get(pk=self.request.user.pk)
+        return super().form_valid(form)
 
 
 class TaskFormUpdateView(
@@ -82,6 +89,7 @@ class TaskFormUpdateView(
 
 class TaskFormDeleteView(
     CustomLoginRequiredMixin,
+    CheckAuthorMixin,
     SuccessMessageMixin,
     DeleteView,
 ):
@@ -92,3 +100,6 @@ class TaskFormDeleteView(
 
     success_url = reverse_lazy('tasks_index')
     success_message = _('Task successfully deleted')
+
+    permission_url = reverse_lazy('tasks_index')
+    permission_message = _('task_no_permissions')

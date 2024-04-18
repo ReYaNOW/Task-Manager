@@ -8,6 +8,9 @@ start:
 	make collectstatic
 	gunicorn task_manager.wsgi
 
+shell:
+	python3 manage.py shell_plus --ipython
+
 lint:
 	poetry run flake8 task_manager
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-12 15:08+0300\n"
+"POT-Creation-Date: 2024-04-17 11:43+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,76 +18,192 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\task_manager\settings.py:110
+#: .\task_manager\labels\forms.py:13 .\task_manager\statuses\forms.py:13
+#: .\task_manager\templates\index_pages\labels_index.html:12
+#: .\task_manager\templates\index_pages\statuses_index.html:12
+#: .\task_manager\templates\index_pages\tasks_index.html:23
+#: .\task_manager\users\forms.py:26
+msgid "Name"
+msgstr "Name"
+
+#: .\task_manager\labels\forms.py:20
+#, fuzzy
+#| msgid "task_exists_message"
+msgid "label_exists_message"
+msgstr "A task with the same name already exists."
+
+#: .\task_manager\labels\tests.py:105 .\task_manager\labels\views.py:62
+msgid "label_in_usage"
+msgstr "Cannot remove label because it is in use"
+
+#: .\task_manager\labels\views.py:23
+#: .\task_manager\templates\index_pages\labels_index.html:7
+#, fuzzy
+#| msgid "Create status"
+msgid "Create label"
+msgstr "Create status"
+
+#: .\task_manager\labels\views.py:29
+#, fuzzy
+#| msgid "Task successfully created"
+msgid "Label successfully created"
+msgstr "Task successfully created"
+
+#: .\task_manager\labels\views.py:38
+#, fuzzy
+#| msgid "Change status"
+msgid "Change label"
+msgstr "Change status"
+
+#: .\task_manager\labels\views.py:44
+#, fuzzy
+#| msgid "Task changed successfully"
+msgid "Label changed successfully"
+msgstr "Task changed successfully"
+
+#: .\task_manager\labels\views.py:54
+#, fuzzy
+#| msgid "Deleting status"
+msgid "Deleting label"
+msgstr "Deleting status"
+
+#: .\task_manager\labels\views.py:59
+#, fuzzy
+#| msgid "Task successfully deleted"
+msgid "Label successfully deleted"
+msgstr "Task successfully deleted"
+
+#: .\task_manager\settings.py:112
 msgid "English"
 msgstr "English"
 
-#: .\task_manager\settings.py:111
+#: .\task_manager\settings.py:113
 msgid "Russian"
 msgstr "Russian"
-
-#: .\task_manager\statuses\forms.py:13
-msgid "status_name"
-msgstr "Name"
 
 #: .\task_manager\statuses\forms.py:20
 msgid "status_exists_message"
 msgstr "A status with the same name already exists."
 
-#: .\task_manager\statuses\views.py:28
+#: .\task_manager\statuses\views.py:23
+#: .\task_manager\templates\index_pages\statuses_index.html:7
+msgid "Create status"
+msgstr "Create status"
+
+#: .\task_manager\statuses\views.py:29
 msgid "Status successfully created"
 msgstr "Status successfully created"
 
-#: .\task_manager\statuses\views.py:47
+#: .\task_manager\statuses\views.py:38
+msgid "Change status"
+msgstr "Change status"
+
+#: .\task_manager\statuses\views.py:44
 msgid "Status changed successfully"
 msgstr "Status changed successfully"
 
-#: .\task_manager\statuses\views.py:64
+#: .\task_manager\statuses\views.py:54
+msgid "Deleting status"
+msgstr "Deleting status"
+
+#: .\task_manager\statuses\views.py:59
 msgid "Status successfully deleted"
 msgstr "Status successfully deleted"
 
-#: .\task_manager\tasks\forms.py:19
+#: .\task_manager\statuses\views.py:62
+#, fuzzy
+#| msgid "status_name"
+msgid "status_in_usage"
+msgstr "Cannot remove status because it is in use"
+
+#: .\task_manager\tasks\forms.py:20
 msgid "task_exists_message"
 msgstr "A task with the same name already exists."
 
-#: .\task_manager\tasks\forms.py:25 .\task_manager\tasks\models.py:20
-#: .\task_manager\templates\tasks\index.html:24
+#: .\task_manager\tasks\forms.py:26 .\task_manager\tasks\models.py:21
+#: .\task_manager\templates\crud_parts\task_read.html:24
+#: .\task_manager\templates\index_pages\tasks_index.html:24
 msgid "Status"
 msgstr "Status"
 
-#: .\task_manager\tasks\forms.py:28 .\task_manager\tasks\models.py:25
-#: .\task_manager\templates\tasks\index.html:26
+#: .\task_manager\tasks\forms.py:29 .\task_manager\tasks\models.py:28
+#: .\task_manager\templates\crud_parts\task_read.html:20
+#: .\task_manager\templates\index_pages\tasks_index.html:26
 msgid "Executor"
 msgstr "Executor"
 
-#: .\task_manager\tasks\forms.py:31
+#: .\task_manager\tasks\forms.py:32 .\task_manager\tasks\models.py:36
+msgid "Label"
+msgstr "Label"
+
+#: .\task_manager\tasks\forms.py:35
 msgid "only_own_tasks"
 msgstr "Only own tasks"
 
-#: .\task_manager\tasks\models.py:10
+#: .\task_manager\tasks\models.py:11
 msgid "name"
 msgstr "Surname"
 
-#: .\task_manager\tasks\models.py:12
+#: .\task_manager\tasks\models.py:13
 msgid "Description"
 msgstr "Description"
 
-#: .\task_manager\tasks\models.py:16
-#: .\task_manager\templates\tasks\index.html:25
+#: .\task_manager\tasks\models.py:17
+#: .\task_manager\templates\crud_parts\task_read.html:16
+#: .\task_manager\templates\index_pages\tasks_index.html:25
 msgid "Author"
 msgstr "Author"
 
-#: .\task_manager\tasks\views.py:52
+#: .\task_manager\tasks\views.py:51
+msgid "Task view"
+msgstr "Task view"
+
+#: .\task_manager\tasks\views.py:57
+#: .\task_manager\templates\index_pages\tasks_index.html:8
+#, fuzzy
+#| msgid "Create status"
+msgid "Create task"
+msgstr "Create status"
+
+#: .\task_manager\tasks\views.py:63
 msgid "Task successfully created"
 msgstr "Task successfully created"
 
-#: .\task_manager\tasks\views.py:68
+#: .\task_manager\tasks\views.py:76
+#, fuzzy
+#| msgid "Change status"
+msgid "Change task"
+msgstr "Change status"
+
+#: .\task_manager\tasks\views.py:82
 msgid "Task changed successfully"
 msgstr "Task changed successfully"
 
-#: .\task_manager\tasks\views.py:82
+#: .\task_manager\tasks\views.py:92
+#, fuzzy
+#| msgid "Deleting status"
+msgid "Deleting task"
+msgstr "Deleting status"
+
+#: .\task_manager\tasks\views.py:97
 msgid "Task successfully deleted"
 msgstr "Task successfully deleted"
+
+#: .\task_manager\templates\crud_parts\delete.html:7
+msgid "Wont to delete?"
+msgstr "Are you sure you want to delete"
+
+#: .\task_manager\templates\crud_parts\delete.html:11
+msgid "Yes, delete"
+msgstr "Yes, delete"
+
+#: .\task_manager\templates\crud_parts\task_read.html:28
+#: .\task_manager\templates\index_pages\labels_index.html:13
+#: .\task_manager\templates\index_pages\statuses_index.html:13
+#: .\task_manager\templates\index_pages\tasks_index.html:27
+#: .\task_manager\templates\index_pages\users_index.html:12
+msgid "Date of creation"
+msgstr "Date of creation"
 
 #: .\task_manager\templates\includes\head.html:7
 msgid "Hexlet Task Manager"
@@ -98,12 +214,12 @@ msgid "Task manager"
 msgstr "Task manager"
 
 #: .\task_manager\templates\includes\nav.html:18
-#: .\task_manager\templates\users\index.html:4
+#: .\task_manager\templates\index_pages\users_index.html:4
 msgid "Users"
 msgstr "Users"
 
 #: .\task_manager\templates\includes\nav.html:22
-#: .\task_manager\templates\statuses\index.html:4
+#: .\task_manager\templates\index_pages\statuses_index.html:4
 msgid "Statuses"
 msgstr "Statuses"
 
@@ -112,7 +228,7 @@ msgid "Tags"
 msgstr "Tags"
 
 #: .\task_manager\templates\includes\nav.html:28
-#: .\task_manager\templates\tasks\index.html:5
+#: .\task_manager\templates\index_pages\tasks_index.html:5
 msgid "Tasks"
 msgstr "Tasks"
 
@@ -123,7 +239,7 @@ msgid "Login"
 msgstr "Login"
 
 #: .\task_manager\templates\includes\nav.html:37
-#: .\task_manager\templates\users\create.html:5
+#: .\task_manager\users\views.py:24
 msgid "Sign Up"
 msgstr "Sign Up"
 
@@ -134,6 +250,18 @@ msgstr "Language"
 #: .\task_manager\templates\includes\nav.html:82
 msgid "Logout"
 msgstr "Logout"
+
+#: .\task_manager\templates\includes\submit_button.html:5
+msgid "Sign up"
+msgstr "Sign up"
+
+#: .\task_manager\templates\includes\submit_button.html:9
+msgid "Create"
+msgstr "Create"
+
+#: .\task_manager\templates\includes\submit_button.html:13
+msgid "Change"
+msgstr "Change"
 
 #: .\task_manager\templates\index.html:8
 msgid "Hi from Hexlet!"
@@ -147,96 +275,17 @@ msgstr "Programming courses aimed practice application"
 msgid "Learn more"
 msgstr "Learn more"
 
-#: .\task_manager\templates\statuses\create.html:5
-#: .\task_manager\templates\statuses\index.html:6
-msgid "Create status"
-msgstr "Create status"
+#: .\task_manager\templates\index_pages\labels_index.html:4
+msgid "Labels"
+msgstr "Labels"
 
-#: .\task_manager\templates\statuses\create.html:10
-#: .\task_manager\templates\tasks\create.html:10
-msgid "Create"
-msgstr "Create"
-
-#: .\task_manager\templates\statuses\delete.html:5
-msgid "Deleting status"
-msgstr "Deleting status"
-
-#: .\task_manager\templates\statuses\delete.html:7
-#: .\task_manager\templates\users\delete.html:7
-msgid "Wont to delete?"
-msgstr "Are you sure you want to delete"
-
-#: .\task_manager\templates\statuses\delete.html:11
-#: .\task_manager\templates\tasks\delete.html:11
-#: .\task_manager\templates\users\delete.html:11
-msgid "Yes, delete"
-msgstr "Yes, delete"
-
-#: .\task_manager\templates\statuses\index.html:11
-#: .\task_manager\users\forms.py:26
-msgid "Name"
-msgstr "Name"
-
-#: .\task_manager\templates\statuses\index.html:12
-#: .\task_manager\templates\tasks\index.html:27
-#: .\task_manager\templates\users\index.html:12
-msgid "Date of creation"
-msgstr "Date of creation"
-
-#: .\task_manager\templates\statuses\update.html:5
-msgid "Change status"
-msgstr "Change status"
-
-#: .\task_manager\templates\statuses\update.html:10
-#: .\task_manager\templates\tasks\update.html:10
-#: .\task_manager\templates\users\update.html:10
-msgid "Change"
-msgstr "Change"
-
-#: .\task_manager\templates\tasks\create.html:5
-#: .\task_manager\templates\tasks\index.html:8
-#, fuzzy
-#| msgid "Create status"
-msgid "Create task"
-msgstr "Create status"
-
-#: .\task_manager\templates\tasks\delete.html:5
-#, fuzzy
-#| msgid "Deleting status"
-msgid "Deleting task"
-msgstr "Deleting status"
-
-#: .\task_manager\templates\tasks\delete.html:7
-#, fuzzy
-#| msgid "Wont to delete?"
-msgid "Wont to delete task?"
-msgstr "Are you sure you want to delete"
-
-#: .\task_manager\templates\tasks\update.html:5
-#, fuzzy
-#| msgid "Change status"
-msgid "Change task"
-msgstr "Change status"
-
-#: .\task_manager\templates\users\create.html:10
-msgid "Sign up"
-msgstr "Sign up"
-
-#: .\task_manager\templates\users\delete.html:5
-msgid "Deleting user"
-msgstr "Deleting user"
-
-#: .\task_manager\templates\users\index.html:10
+#: .\task_manager\templates\index_pages\users_index.html:10
 msgid "User name"
 msgstr "User name"
 
-#: .\task_manager\templates\users\index.html:11
+#: .\task_manager\templates\index_pages\users_index.html:11
 msgid "Full name"
 msgstr "Full name"
-
-#: .\task_manager\templates\users\update.html:5
-msgid "Change user"
-msgstr "Change user"
 
 #: .\task_manager\users\forms.py:9
 msgid "user_name_validation_error"
@@ -274,19 +323,31 @@ msgstr "A user with the same name already exists."
 msgid "Sign up success"
 msgstr "User has been successfully registered"
 
-#: .\task_manager\users\views.py:49
+#: .\task_manager\users\views.py:40
+msgid "Change user"
+msgstr "Change user"
+
+#: .\task_manager\users\views.py:46
 msgid "Edit success"
 msgstr "User has been successfully changed"
 
-#: .\task_manager\users\views.py:68
+#: .\task_manager\users\views.py:57
+msgid "Deleting user"
+msgstr "Deleting user"
+
+#: .\task_manager\users\views.py:62
 msgid "Delete success"
 msgstr "User has been deleted successfully"
 
-#: .\task_manager\utils.py:10
+#: .\task_manager\users\views.py:65
+msgid "protected_user"
+msgstr "Cannot remove user because it is in use"
+
+#: .\task_manager\utils.py:11
 msgid "Arent authorized"
 msgstr "You are not signed in! Please log in."
 
-#: .\task_manager\utils.py:21
+#: .\task_manager\utils.py:22
 msgid "Dont have permissions to change"
 msgstr "You are not authorized to change other user's settings."
 

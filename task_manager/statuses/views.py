@@ -3,7 +3,10 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 
-from task_manager.utils import CustomLoginRequiredMixin
+from task_manager.utils import (
+    CustomLoginRequiredMixin,
+    ProtectedErrorHandlerMixin,
+)
 from .forms import StatusCreateForm
 from .models import Status
 
@@ -44,6 +47,7 @@ class StatusFormUpdateView(
 class StatusFormDeleteView(
     CustomLoginRequiredMixin,
     SuccessMessageMixin,
+    ProtectedErrorHandlerMixin,
     DeleteView,
 ):
     template_name = 'crud_parts/delete.html'
@@ -53,3 +57,6 @@ class StatusFormDeleteView(
 
     success_url = reverse_lazy('statuses_index')
     success_message = _('Status successfully deleted')
+
+    protected_url = reverse_lazy('statuses_index')
+    protected_message = _('status_in_usage')
