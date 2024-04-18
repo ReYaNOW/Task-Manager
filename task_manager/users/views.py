@@ -44,7 +44,7 @@ class UserFormUpdateView(
 
     success_url = reverse_lazy('users_index')
     success_message = _('Edit success')
-    
+
     permission_url = reverse_lazy('users_index')
     permission_message = _('Dont have permissions to change')
 
@@ -63,9 +63,9 @@ class UserFormDeleteView(
 
     success_url = reverse_lazy('users_index')
     success_message = _('Delete success')
-    
+
     permission_url = reverse_lazy('users_index')
     permission_message = _('Dont have permissions to change')
-    
+
     protected_url = reverse_lazy('users_index')
     protected_message = _('protected_user')

@@ -11,7 +11,9 @@ urlpatterns = [
     path('', IndexView.as_view(), name='statuses_index'),
     path('create/', StatusFormCreateView.as_view(), name='status_create'),
     path(
-        '<int:pk>/update/', StatusFormUpdateView.as_view(), name='status_update'
+        '<int:pk>/update/',
+        StatusFormUpdateView.as_view(),
+        name='status_update',
     ),
     path(
         '<int:pk>/delete/',
