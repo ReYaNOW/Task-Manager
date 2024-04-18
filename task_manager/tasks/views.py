@@ -33,7 +33,7 @@ class TaskView(CustomLoginRequiredMixin, DetailView):
 
 
 class TaskFormCreateView(
-    SuccessMessageMixin, CustomLoginRequiredMixin, CreateView
+    CustomLoginRequiredMixin, SuccessMessageMixin, CreateView
 ):
     template_name = 'crud_parts/create.html'
     extra_context = {'title': _('Create task')}
