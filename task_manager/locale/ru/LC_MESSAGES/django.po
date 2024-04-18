@@ -51,7 +51,7 @@ msgstr "Изменение метки"
 
 #: .\task_manager\labels\views.py:44
 msgid "Label changed successfully"
-msgstr "Задача успешно изменена"
+msgstr "Метка успешно изменена"
 
 #: .\task_manager\labels\views.py:54
 msgid "Deleting label"
