@@ -123,32 +123,30 @@ class TaskDetail(CustomTestCase):
 class TaskFilter(CustomTestCase):
     def test_filter_by_status(self):
         response = self.client.get(
-            reverse('tasks_index'),
-            {'status': self.status1.pk}
+            reverse('tasks_index'), {'status': self.status1.pk}
         )
         tasks = response.context['tasks']
-        
+
         self.assertEqual(tasks.count(), 1)
         self.assertIn(self.task2, tasks)
         self.assertNotIn(self.task1, tasks)
         self.assertNotIn(self.task3, tasks)
-    
+
     def test_filter_by_label(self):
         response = self.client.get(
-            reverse('tasks_index'),
-            {'labels': self.label3.pk}
+            reverse('tasks_index'), {'labels': self.label3.pk}
         )
         tasks = response.context['tasks']
-        
+
         self.assertEqual(tasks.count(), 2)
         self.assertIn(self.task1, tasks)
         self.assertIn(self.task2, tasks)
         self.assertNotIn(self.task3, tasks)
-    
+
     def test_filter_by_current_user(self):
         response = self.client.get(reverse('tasks_index'), {'personal': 'on'})
         tasks = response.context['tasks']
-        
+
         self.assertEqual(tasks.count(), 1)
         self.assertIn(self.task1, tasks)
         self.assertNotIn(self.task2, tasks)
