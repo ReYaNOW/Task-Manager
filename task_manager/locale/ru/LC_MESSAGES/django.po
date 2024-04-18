@@ -274,8 +274,6 @@ msgid "Full name"
 msgstr "Полное имя"
 
 #: .\task_manager\templates\login.html:10
-#, fuzzy
-#| msgid "Login"
 msgid "Logining"
 msgstr "Войти"
 
