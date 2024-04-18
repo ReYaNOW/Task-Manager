@@ -1,52 +1,29 @@
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
-from django.views import View
 from django.views.generic import (
     CreateView,
     UpdateView,
     DeleteView,
     DetailView,
 )
+from django_filters.views import FilterView
 
 from task_manager.utils import (
     CustomLoginRequiredMixin,
     CheckAuthorMixin,
 )
-from .forms import TaskCreateForm, SearchForm
+from .filter import TaskFilter
+from .forms import TaskCreateForm
 from .models import Task
 
 
-class IndexView(CustomLoginRequiredMixin, View):
-    def get(self, request):
-        form = SearchForm()
-        tasks = Task.objects.all()
-
-        return render(
-            request,
-            'index_pages/tasks_index.html',
-            context={'tasks': tasks, 'form': form},
-        )
-
-    def post(self, request):
-        form = SearchForm(request.POST)
-        tasks = Task.objects.all()
-
-        if form.is_valid():
-            for param, value in form.cleaned_data.items():
-                if value:
-                    if param == 'only_own_tasks':
-                        tasks = tasks.filter(author=request.user)
-                    else:
-                        tasks = tasks.filter(**{param: value})
-
-        return render(
-            request,
-            'index_pages/tasks_index.html',
-            {'tasks': tasks, 'form': form},
-        )
+class IndexView(CustomLoginRequiredMixin, FilterView):
+    template_name = 'index_pages/tasks_index.html'
+    model = Task
+    filterset_class = TaskFilter
+    context_object_name = 'tasks'
 
 
 class TaskView(CustomLoginRequiredMixin, DetailView):

@@ -10,7 +10,7 @@ from .models import Task
 class TaskCreateForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['name', 'description', 'status', 'executor', 'label']
+        fields = ['name', 'description', 'status', 'executor', 'labels']
 
         widgets = {
             'name': forms.TextInput(attrs={'autofocus': True}),
@@ -19,18 +19,3 @@ class TaskCreateForm(forms.ModelForm):
         error_messages = {
             'name': {'unique': _('task_exists_message')},
         }
-
-
-class SearchForm(forms.Form):
-    status = forms.ModelChoiceField(
-        queryset=Status.objects.all(), required=False, label=_('Status')
-    )
-    executor = forms.ModelChoiceField(
-        queryset=User.objects.all(), required=False, label=_('Executor')
-    )
-    label = forms.ModelMultipleChoiceField(
-        queryset=Label.objects.all(), required=False, label=_('Label')
-    )
-    only_own_tasks = forms.BooleanField(
-        required=False, label=_('only_own_tasks')
-    )

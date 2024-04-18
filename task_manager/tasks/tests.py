@@ -29,9 +29,9 @@ class CustomTestCase(TestCase):
         self.user2 = User.objects.get(pk=2)
         self.user3 = User.objects.get(pk=3)
 
-        self.status1 = Status.objects.get(pk=1)
-        self.status2 = Status.objects.get(pk=2)
-        self.status3 = Status.objects.get(pk=3)
+        self.status1 = Status.objects.get(pk=4)
+        self.status2 = Status.objects.get(pk=8)
+        self.status3 = Status.objects.get(pk=9)
 
         self.label1 = Label.objects.get(pk=1)
         self.label2 = Label.objects.get(pk=2)
@@ -118,3 +118,38 @@ class TaskDetail(CustomTestCase):
         response = self.client.get(reverse('task_read', args=[self.task2.pk]))
 
         self.assertEqual(response.status_code, 200)
+
+
+class TaskFilter(CustomTestCase):
+    def test_filter_by_status(self):
+        response = self.client.get(
+            reverse('tasks_index'),
+            {'status': self.status1.pk}
+        )
+        tasks = response.context['tasks']
+        
+        self.assertEqual(tasks.count(), 1)
+        self.assertIn(self.task2, tasks)
+        self.assertNotIn(self.task1, tasks)
+        self.assertNotIn(self.task3, tasks)
+    
+    def test_filter_by_label(self):
+        response = self.client.get(
+            reverse('tasks_index'),
+            {'labels': self.label3.pk}
+        )
+        tasks = response.context['tasks']
+        
+        self.assertEqual(tasks.count(), 2)
+        self.assertIn(self.task1, tasks)
+        self.assertIn(self.task2, tasks)
+        self.assertNotIn(self.task3, tasks)
+    
+    def test_filter_by_current_user(self):
+        response = self.client.get(reverse('tasks_index'), {'personal': 'on'})
+        tasks = response.context['tasks']
+        
+        self.assertEqual(tasks.count(), 1)
+        self.assertIn(self.task1, tasks)
+        self.assertNotIn(self.task2, tasks)
+        self.assertNotIn(self.task3, tasks)

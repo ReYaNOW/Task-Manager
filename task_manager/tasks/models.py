@@ -28,7 +28,7 @@ class Task(models.Model):
         verbose_name=_('Executor'),
         related_name='executor',
     )
-    label = models.ManyToManyField(
+    labels = models.ManyToManyField(
         Label,
         blank=True,
         through='TaskLabelThrough',
