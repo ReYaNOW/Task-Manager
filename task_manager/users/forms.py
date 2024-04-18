@@ -29,7 +29,10 @@ class UserCreateForm(UserCreationForm):
             'password1': _('Password'),
         }
         widgets = {
-            'first_name': forms.TextInput(attrs={'autofocus': True}),
+            'first_name': forms.TextInput(
+                attrs={'autofocus': True, 'required': True}
+            ),
+            'last_name': forms.TextInput(attrs={'required': True}),
         }
 
         help_texts = {'username': _('username_help_message')}
