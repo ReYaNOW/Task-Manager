@@ -12,7 +12,9 @@ class UserFullnameChoiceField(forms.ModelChoiceField):
 
 
 class TaskCreateForm(forms.ModelForm):
-    executor = UserFullnameChoiceField(queryset=User.objects.all())
+    executor = UserFullnameChoiceField(
+        queryset=User.objects.all(), label=_('Executor')
+    )
 
     class Meta:
         model = Task
