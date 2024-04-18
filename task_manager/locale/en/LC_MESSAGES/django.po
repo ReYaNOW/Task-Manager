@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-18 12:26+0300\n"
+"POT-Creation-Date: 2024-04-18 13:59+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,14 +58,6 @@ msgstr "Deleting label"
 #: .\task_manager\labels\views.py:59
 msgid "Label successfully deleted"
 msgstr "Label successfully deleted"
-
-#: .\task_manager\settings.py:113
-msgid "English"
-msgstr "English"
-
-#: .\task_manager\settings.py:114
-msgid "Russian"
-msgstr "Russian"
 
 #: .\task_manager\statuses\forms.py:20
 msgid "status_exists_message"
@@ -216,7 +208,6 @@ msgstr "Tasks"
 
 #: .\task_manager\templates\includes\nav.html:33
 #: .\task_manager\templates\login.html:5
-#: .\task_manager\templates\login.html:10
 msgid "Login"
 msgstr "Login"
 
@@ -279,6 +270,10 @@ msgstr "User name"
 #: .\task_manager\templates\index_pages\users_index.html:11
 msgid "Full name"
 msgstr "Full name"
+
+#: .\task_manager\templates\login.html:10
+msgid "Logining"
+msgstr "Login"
 
 #: .\task_manager\users\forms.py:9
 msgid "user_name_validation_error"
@@ -352,4 +347,8 @@ msgstr "You are logged in"
 msgid "Logged_out"
 msgstr "You are logged out"
 
+#~ msgid "English"
+#~ msgstr "English"
 
+#~ msgid "Russian"
+#~ msgstr "Russian"
