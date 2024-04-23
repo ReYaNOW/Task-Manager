@@ -1,15 +1,15 @@
 from django.urls import path
 
 from task_manager.users.views import (
-    IndexView,
-    UserFormCreateView,
-    UserFormUpdateView,
-    UserFormDeleteView,
+    UserListView,
+    UserCreateView,
+    UserUpdateView,
+    UserDeleteView,
 )
 
 urlpatterns = [
-    path('', IndexView.as_view(), name='users_index'),
-    path('create/', UserFormCreateView.as_view(), name='user_create'),
-    path('<int:pk>/update/', UserFormUpdateView.as_view(), name='user_update'),
-    path('<int:pk>/delete/', UserFormDeleteView.as_view(), name='user_delete'),
+    path('', UserListView.as_view(), name='users_list'),
+    path('create/', UserCreateView.as_view(), name='user_create'),
+    path('<int:pk>/update/', UserUpdateView.as_view(), name='user_update'),
+    path('<int:pk>/delete/', UserDeleteView.as_view(), name='user_delete'),
 ]
