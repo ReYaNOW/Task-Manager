@@ -15,7 +15,7 @@ jobs:
           poetry install
       - name: Run linter and pytest
         env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: |
           make check
       - name: Test & publish code coverage
