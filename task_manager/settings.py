@@ -12,10 +12,14 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 
-from dotenv import load_dotenv
 import dj_database_url
 
-load_dotenv()
+try:
+    from dotenv import load_dotenv
+    
+    load_dotenv()
+except ModuleNotFoundError:
+    pass
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -98,7 +102,7 @@ DATABASES = {'default': dj_database_url.config()}
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.'
-        'MinimumLengthValidator',
+                'MinimumLengthValidator',
         "OPTIONS": {
             "min_length": 3,
         },
