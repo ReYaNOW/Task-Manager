@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 
-from task_manager.utils import (
+from task_manager.mixins import (
     CustomLoginRequiredMixin,
     ProtectedErrorHandlerMixin,
 )
@@ -11,25 +11,25 @@ from .forms import StatusCreateForm
 from .models import Status
 
 
-class IndexView(ListView):
-    template_name = 'index_pages/statuses_index.html'
+class StatusListView(CustomLoginRequiredMixin, ListView):
+    template_name = 'statuses/statuses_list.html'
 
     model = Status
     context_object_name = 'statuses'
 
 
-class StatusFormCreateView(SuccessMessageMixin, CreateView):
+class StatusCreateView(SuccessMessageMixin, CreateView):
     template_name = 'crud_parts/create.html'
     extra_context = {'title': _('Create status')}
 
     model = Status
     form_class = StatusCreateForm
 
-    success_url = reverse_lazy('statuses_index')
+    success_url = reverse_lazy('statuses_list')
     success_message = _('Status successfully created')
 
 
-class StatusFormUpdateView(
+class StatusUpdateView(
     CustomLoginRequiredMixin,
     SuccessMessageMixin,
     UpdateView,
@@ -40,11 +40,11 @@ class StatusFormUpdateView(
     model = Status
     form_class = StatusCreateForm
 
-    success_url = reverse_lazy('statuses_index')
+    success_url = reverse_lazy('statuses_list')
     success_message = _('Status changed successfully')
 
 
-class StatusFormDeleteView(
+class StatusDeleteView(
     CustomLoginRequiredMixin,
     SuccessMessageMixin,
     ProtectedErrorHandlerMixin,
@@ -55,8 +55,8 @@ class StatusFormDeleteView(
 
     model = Status
 
-    success_url = reverse_lazy('statuses_index')
+    success_url = reverse_lazy('statuses_list')
     success_message = _('Status successfully deleted')
 
-    protected_url = reverse_lazy('statuses_index')
+    protected_url = reverse_lazy('statuses_list')
     protected_message = _('status_in_usage')

@@ -10,7 +10,7 @@ from django.views.generic import (
 )
 from django_filters.views import FilterView
 
-from task_manager.utils import (
+from task_manager.mixins import (
     CustomLoginRequiredMixin,
     CheckAuthorMixin,
 )
@@ -19,20 +19,20 @@ from .forms import TaskCreateForm
 from .models import Task
 
 
-class IndexView(CustomLoginRequiredMixin, FilterView):
-    template_name = 'index_pages/tasks_index.html'
+class TaskListView(CustomLoginRequiredMixin, FilterView):
+    template_name = 'tasks/tasks_list.html'
     model = Task
     filterset_class = TaskFilter
     context_object_name = 'tasks'
 
 
-class TaskView(CustomLoginRequiredMixin, DetailView):
-    template_name = 'crud_parts/task_read.html'
+class TaskDetailView(CustomLoginRequiredMixin, DetailView):
+    template_name = 'tasks/task_read.html'
     extra_context = {'title': _('Task view')}
     model = Task
 
 
-class TaskFormCreateView(
+class TaskCreateView(
     CustomLoginRequiredMixin, SuccessMessageMixin, CreateView
 ):
     template_name = 'crud_parts/create.html'
@@ -41,7 +41,7 @@ class TaskFormCreateView(
     model = Task
     form_class = TaskCreateForm
 
-    success_url = reverse_lazy('tasks_index')
+    success_url = reverse_lazy('tasks_list')
     success_message = _('Task successfully created')
 
     def form_valid(self, form):
@@ -49,7 +49,7 @@ class TaskFormCreateView(
         return super().form_valid(form)
 
 
-class TaskFormUpdateView(
+class TaskUpdateView(
     CustomLoginRequiredMixin,
     SuccessMessageMixin,
     UpdateView,
@@ -60,11 +60,11 @@ class TaskFormUpdateView(
     model = Task
     form_class = TaskCreateForm
 
-    success_url = reverse_lazy('tasks_index')
+    success_url = reverse_lazy('tasks_list')
     success_message = _('Task changed successfully')
 
 
-class TaskFormDeleteView(
+class TaskDeleteView(
     CustomLoginRequiredMixin,
     CheckAuthorMixin,
     SuccessMessageMixin,
@@ -75,8 +75,8 @@ class TaskFormDeleteView(
 
     model = Task
 
-    success_url = reverse_lazy('tasks_index')
+    success_url = reverse_lazy('tasks_list')
     success_message = _('Task successfully deleted')
 
-    permission_url = reverse_lazy('tasks_index')
+    permission_url = reverse_lazy('tasks_list')
     permission_message = _('task_no_permissions')

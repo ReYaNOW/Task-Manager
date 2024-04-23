@@ -2,14 +2,13 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render
 from django.utils.translation import gettext_lazy as _
-from django.views import View
+from django.views.generic.base import TemplateView
 
-from task_manager.utils import CustomMessageMixin
+from task_manager.mixins import CustomMessageMixin
 
 
-class IndexView(View):
-    def get(self, request):
-        return render(request, 'index.html')
+class IndexView(TemplateView):
+    template_name = 'index.html'
 
 
 class UserLoginView(CustomMessageMixin, LoginView):

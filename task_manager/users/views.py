@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 
-from task_manager.utils import (
+from task_manager.mixins import (
     CustomLoginRequiredMixin,
     CustomPermissionRequiredMixin,
     ProtectedErrorHandlerMixin,
@@ -12,14 +12,14 @@ from task_manager.utils import (
 from .forms import UserCreateForm, UserUpdateForm
 
 
-class IndexView(ListView):
-    template_name = 'index_pages/users_index.html'
+class UserListView(ListView):
+    template_name = 'users/users_list.html'
 
     model = User
     context_object_name = 'users'
 
 
-class UserFormCreateView(SuccessMessageMixin, CreateView):
+class UserCreateView(SuccessMessageMixin, CreateView):
     template_name = 'crud_parts/create.html'
     extra_context = {'title': _('Sign Up')}
 
@@ -30,7 +30,7 @@ class UserFormCreateView(SuccessMessageMixin, CreateView):
     success_message = _('Sign up success')
 
 
-class UserFormUpdateView(
+class UserUpdateView(
     CustomLoginRequiredMixin,
     CustomPermissionRequiredMixin,
     SuccessMessageMixin,
@@ -42,14 +42,14 @@ class UserFormUpdateView(
     model = User
     form_class = UserUpdateForm
 
-    success_url = reverse_lazy('users_index')
+    success_url = reverse_lazy('users_list')
     success_message = _('Edit success')
 
-    permission_url = reverse_lazy('users_index')
+    permission_url = reverse_lazy('users_list')
     permission_message = _('Dont have permissions to change')
 
 
-class UserFormDeleteView(
+class UserDeleteView(
     CustomLoginRequiredMixin,
     CustomPermissionRequiredMixin,
     SuccessMessageMixin,
@@ -61,11 +61,11 @@ class UserFormDeleteView(
 
     model = User
 
-    success_url = reverse_lazy('users_index')
+    success_url = reverse_lazy('users_list')
     success_message = _('Delete success')
 
-    permission_url = reverse_lazy('users_index')
+    permission_url = reverse_lazy('users_list')
     permission_message = _('Dont have permissions to change')
 
-    protected_url = reverse_lazy('users_index')
+    protected_url = reverse_lazy('users_list')
     protected_message = _('protected_user')
