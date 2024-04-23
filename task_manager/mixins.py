@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.db.models import ProtectedError
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -58,3 +59,17 @@ class ProtectedErrorHandlerMixin:
         except ProtectedError:
             messages.error(request, self.protected_message)
             return redirect(self.protected_url)
+
+
+class SetUpLoggedUserMixin:
+    @classmethod
+    def setUpTestData(cls):
+        cls.logged_user = get_user_model().objects.create_user(
+            username='username', password='password'
+        )
+
+    def setUp(self):
+        self.client.login(
+            username=self.logged_user.username,
+            password='password',
+        )
