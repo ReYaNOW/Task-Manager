@@ -1,14 +1,18 @@
+PORT ?= 8080
+
+
 install:
 	poetry install
+	make migrate
 
 dev:
-	poetry run python manage.py runserver
+	poetry run python3 manage.py runserver $(PORT)
 
 start:
-	gunicorn task_manager.wsgi
+	poetry run gunicorn -w 5 -b 0.0.0.0:$(PORT) task_manager.wsgi:application
 
 shell:
-	python3 manage.py shell_plus --ipython
+	poetry run python3 manage.py shell_plus --ipython
 
 lint:
 	poetry run flake8 task_manager
@@ -18,25 +22,25 @@ test:
 
 test-coverage:
 	poetry run coverage run manage.py test
-	poetry run coverage report -m --include=task_manager/* --omit=task_manager/settings.py,*/migrations/*,*/tests/*,tests.py
-	poetry run coverage xml --include=task_manager/* --omit=task_manager/settings.py,*/migrations/*,*/tests/*,tests.py
+	poetry run coverage report -m
+	poetry run coverage xml
 
 check:
 	make lint
 	make test
 
 messages:
-	django-admin makemessages -l ru
-	django-admin makemessages -l en
+	poetry run django-admin makemessages -l ru
+	poetry run django-admin makemessages -l en
 
 compilemessages:
-	django-admin compilemessages --ignore=.venv || true
+	poetry run django-admin compilemessages --ignore=.venv || true
 
 migrations:
-	poetry run python manage.py makemigrations
+	poetry run python3 manage.py makemigrations
 
 migrate:
-	poetry run python manage.py migrate
+	poetry run python3 manage.py migrate
 
 collectstatic:
-	python3 manage.py collectstatic
+	poetry run python3 manage.py collectstatic
