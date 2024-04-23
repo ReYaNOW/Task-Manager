@@ -9,15 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
       - name: Install dependencies
         run: |
           pip install poetry
           poetry install
       - name: Run linter and pytest
         env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          SECRET_KEY: l9a=sv_2msgls$%+bswm1)%!(di^vkj2rjyv7)wwvewl)up$^*
         run: |
           make check
       - name: Test & publish code coverage
