@@ -1,4 +1,4 @@
-name: Project tests with CI
+name: Linter and tests
 
 on:
   - push
