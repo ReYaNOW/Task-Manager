@@ -44,3 +44,6 @@ migrate:
 
 collectstatic:
 	poetry run python3 manage.py collectstatic
+
+get_loc:
+	pygount --folders-to-skip="[...]migrations,static,locale" -f summary task_manager/
