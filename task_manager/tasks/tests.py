@@ -1,109 +1,125 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
+from task_manager.mixins import SetUpLoggedUserMixin
 from task_manager.labels.models import Label
 from task_manager.statuses.models import Status
 from task_manager.tasks.models import Task
 
 
-class CustomTestCase(TestCase):
-    fixtures = ['tasks.json', 'labels.json', 'statuses.json', 'users.json']
+class TestTasksMixin(SetUpLoggedUserMixin):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.test_status = Status.objects.create(name='Test status')
+        cls.logged_user_task = Task.objects.create(
+            name='Test task', status=cls.test_status, author=cls.logged_user
+        )
+        cls.test_label = Label.objects.create(name='name')
+        cls.logged_user_task.labels.set([cls.test_label])
 
-    test_task = {
-        'name': 'Task for Tota',
-        'description': 'Task description for Tota',
-        'status': 1,
-        'executor': 1,
-        'labels': [1, 2],
-    }
-
-    def setUp(self):
-        self.task1 = Task.objects.get(pk=1)
-        self.task2 = Task.objects.get(pk=2)
-        self.task3 = Task.objects.get(pk=3)
-
-        self.user1 = User.objects.get(pk=1)
-        self.user2 = User.objects.get(pk=2)
-        self.user3 = User.objects.get(pk=3)
-
-        self.status1 = Status.objects.get(pk=4)
-        self.status2 = Status.objects.get(pk=8)
-        self.status3 = Status.objects.get(pk=9)
-
-        self.label1 = Label.objects.get(pk=1)
-        self.label2 = Label.objects.get(pk=2)
-        self.label3 = Label.objects.get(pk=3)
-
-        self.client: Client = Client()
-        self.client.force_login(self.user1)
+        cls.other_user = get_user_model().objects.create(
+            username='Tota', password='SuperTota'
+        )
 
 
-class TaskCreate(CustomTestCase):
+class TestCreateUpdateMixin(TestTasksMixin):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.test_form_data = {
+            'name': 'Task for Tota',
+            'description': 'Task description for Tota',
+            'status': cls.test_status.id,
+            'executor': cls.logged_user.id,
+            'labels': [cls.test_label.id],
+        }
+
+
+class TestTaskDetailView(TestTasksMixin, TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.url = reverse('task_read', args=[cls.logged_user_task.id])
+
+    def test_task_detail_view_get(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_status_detail_view_get_not_logged_in(self):
+        self.client.logout()
+        response = self.client.get(self.url)
+        self.assertRedirects(response, reverse('login'))
+
+
+class TestTaskCreate(TestCreateUpdateMixin, TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.url = reverse('task_create')
+
     def test_get(self):
-        response = self.client.get(reverse('task_create'))
-
+        response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
 
     def test_post(self):
-        params = self.test_task
         before_creation = Task.objects.count()
-        response = self.client.post(reverse('task_create'), data=params)
+        response = self.client.post(self.url, data=self.test_form_data)
 
-        self.assertTrue(Task.objects.count() == before_creation + 1)
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('tasks_index'))
+        self.assertRedirects(response, reverse('tasks_list'))
+        self.assertTrue(Task.objects.count() == before_creation + 1)
 
 
-class TaskUpdate(CustomTestCase):
+class TestTaskUpdate(TestCreateUpdateMixin, TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.url = reverse('task_update', args=[cls.logged_user_task.id])
+
     def test_get(self):
-        response = self.client.get(
-            reverse('task_update', args=[self.task1.id])
-        )
-
+        response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
 
     def test_post(self):
-        params = self.test_task
-        response = self.client.post(
-            reverse('task_update', args=[self.task1.id]), data=params
-        )
+        response = self.client.post(self.url, data=self.test_form_data)
 
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('tasks_index'))
+        self.assertRedirects(response, reverse('tasks_list'))
 
-        updated_task = Task.objects.get(id=self.task1.id)
+        updated_task = Task.objects.get(id=self.logged_user_task.id)
+        self.assertEqual(updated_task.name, self.test_form_data['name'])
 
-        self.assertEqual(updated_task.name, params['name'])
 
+class TestTaskDelete(TestTasksMixin, TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.url = reverse('task_delete', args=[cls.logged_user_task.id])
 
-class TaskDelete(CustomTestCase):
     def test_get(self):
-        response = self.client.get(
-            reverse('task_delete', args=[self.task1.id])
-        )
-
+        response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
 
     def test_post(self):
         before_deletion = len(Task.objects.all())
-        response = self.client.post(
-            reverse('task_delete', args=[self.task1.id])
-        )
-
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('tasks_index'))
-        with self.assertRaises(ObjectDoesNotExist):
-            Task.objects.get(id=self.task1.id)
+        response = self.client.post(self.url)
 
         after_deletion = len(Task.objects.all())
         self.assertTrue(before_deletion == after_deletion + 1)
 
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('tasks_list'))
+        with self.assertRaises(ObjectDoesNotExist):
+            Task.objects.get(id=self.logged_user_task.id)
+
     def test_delete_not_author(self):
+        self.client.force_login(self.other_user)
         before_deletion = len(Task.objects.all())
-        self.client.post(reverse('task_delete', args=[self.task2.id]))
+        self.client.post(self.url)
         after_deletion = len(Task.objects.all())
 
         self.assertTrue(before_deletion == after_deletion)
@@ -113,41 +129,76 @@ class TaskDelete(CustomTestCase):
         )
 
 
-class TaskDetail(CustomTestCase):
-    def test_task_detail(self):
-        response = self.client.get(reverse('task_read', args=[self.task2.pk]))
+class TestLoggedUserAndTaskFilterView(TestTasksMixin, TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.other_status = Status.objects.create(name='Other test status')
+        cls.other_user = get_user_model().objects.create(
+            username='alexander_the_great', password='qwer1234qwer1234'
+        )
 
+        cls.other_task = Task.objects.create(
+            name='other task',
+            status=cls.other_status,
+            author=cls.other_user,
+        )
+        cls.url = reverse('tasks_list')
+
+    def test_task_filter_view_get(self):
+        response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
 
-
-class TaskFilter(CustomTestCase):
-    def test_filter_by_status(self):
-        response = self.client.get(
-            reverse('tasks_index'), {'status': self.status1.pk}
+        self.assertQuerysetEqual(
+            list(response.context['tasks']), Task.objects.all()
         )
-        tasks = response.context['tasks']
 
-        self.assertEqual(tasks.count(), 1)
-        self.assertIn(self.task2, tasks)
-        self.assertNotIn(self.task1, tasks)
-        self.assertNotIn(self.task3, tasks)
+    def test_task_filter_view_get_by_status(self):
+        filter_param_test_status = {'status': self.test_status.pk}
+        response = self.client.get(self.url, data=filter_param_test_status)
+        self.assertEqual(response.status_code, 200)
 
-    def test_filter_by_label(self):
-        response = self.client.get(
-            reverse('tasks_index'), {'labels': self.label3.pk}
+        self.assertQuerysetEqual(
+            response.context['tasks'],
+            Task.objects.filter(**filter_param_test_status),
         )
-        tasks = response.context['tasks']
 
-        self.assertEqual(tasks.count(), 2)
-        self.assertIn(self.task1, tasks)
-        self.assertIn(self.task2, tasks)
-        self.assertNotIn(self.task3, tasks)
+    def test_task_filter_view_get_by_executor(self):
+        self.logged_user_task.executor = self.logged_user
+        self.logged_user_task.save()
 
-    def test_filter_by_current_user(self):
-        response = self.client.get(reverse('tasks_index'), {'personal': 'on'})
-        tasks = response.context['tasks']
+        filter_param_executor = {'executor': self.logged_user.pk}
+        response = self.client.get(self.url, data=filter_param_executor)
+        self.assertEqual(response.status_code, 200)
 
-        self.assertEqual(tasks.count(), 1)
-        self.assertIn(self.task1, tasks)
-        self.assertNotIn(self.task2, tasks)
-        self.assertNotIn(self.task3, tasks)
+        self.assertQuerysetEqual(
+            response.context['tasks'],
+            Task.objects.filter(**filter_param_executor),
+        )
+
+    def test_task_filter_view_get_by_label(self):
+        test_label = Label.objects.create(name='Test label')
+        self.logged_user_task.labels.set([test_label])
+
+        filter_param_label = {'labels': test_label.pk}
+        response = self.client.get(self.url, data=filter_param_label)
+        self.assertEqual(response.status_code, 200)
+
+        self.assertQuerysetEqual(
+            response.context['tasks'],
+            Task.objects.filter(labels__in=[test_label]),
+        )
+
+    def test_task_filter_view_get_by_own_tasks(self):
+        filter_param_own_tasks = {'personal': 'on'}
+        response = self.client.get(self.url, data=filter_param_own_tasks)
+        self.assertEqual(response.status_code, 200)
+
+        self.assertQuerysetEqual(
+            response.context['tasks'], [self.logged_user_task]
+        )
+
+    def test_status_filter_view_get_not_logged_in(self):
+        self.client.logout()
+        response = self.client.get(self.url)
+        self.assertRedirects(response, reverse('login'))

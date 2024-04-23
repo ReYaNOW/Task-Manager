@@ -1,94 +1,89 @@
-from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from django.test import TestCase, Client
+from django.test import TestCase
 from django.urls import reverse
 
+from task_manager.mixins import SetUpLoggedUserMixin
 from task_manager.statuses.models import Status
 
 
-def get_test_status_data():
-    return {'name': 'name'}
+class TestStatusesMixin(SetUpLoggedUserMixin):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.test_status = Status.objects.create(name='name')
+        cls.test_form_data = {'name': 'Tota_status'}
 
 
-def get_test_status_form_data():
-    return {'name': 'Tota_status'}
+class TestStatusListView(SetUpLoggedUserMixin, TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.url = reverse('statuses_list')
+
+    def test_index_view_get(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+
+        self.client.logout()
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('login'))
 
 
-class CustomTestCase(TestCase):
-    def setUp(self):
-        self.client = Client()
-        test_user_data = {
-            'username': 'username',
-            'first_name': 'first_name',
-            'last_name': 'last_name',
-            'password': 'password',
-        }
-        self.test_user = User.objects.create_user(**test_user_data)
+class TestStatusCreate(TestStatusesMixin, TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.url = reverse('status_create')
 
-        test_status = get_test_status_data()
-        self.test_status1 = Status.objects.create(**test_status)
-        test_status['name'] = 'name2'
-        self.test_status2 = Status.objects.create(**test_status)
-
-
-class StatusCreate(CustomTestCase):
     def test_get(self):
-        self.client.force_login(self.test_user)
-        response = self.client.get(reverse('status_create'))
-
+        response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
 
     def test_post(self):
-        self.client.force_login(self.test_user)
-        status_data = get_test_status_form_data()
         before_creation = Status.objects.count()
-        response = self.client.post(reverse('status_create'), data=status_data)
+        response = self.client.post(self.url, data=self.test_form_data)
 
         self.assertTrue(Status.objects.count() == before_creation + 1)
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('statuses_index'))
+        self.assertRedirects(response, reverse('statuses_list'))
 
 
-class StatusUpdate(CustomTestCase):
+class TestStatusUpdate(TestStatusesMixin, TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.url = reverse('status_update', args=[cls.test_status.id])
+
     def test_get(self):
-        self.client.force_login(self.test_user)
-        response = self.client.get(
-            reverse('status_update', args=[self.test_status1.id])
-        )
-
+        response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
 
     def test_post(self):
-        self.client.force_login(self.test_user)
-        params = get_test_status_form_data()
-        response = self.client.post(
-            reverse('status_update', args=[self.test_status1.id]), data=params
-        )
+        response = self.client.post(self.url, data=self.test_form_data)
 
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('statuses_index'))
+        self.assertRedirects(response, reverse('statuses_list'))
 
-        updated_status = Status.objects.get(id=self.test_status1.id)
+        updated_status = Status.objects.get(id=self.test_status.id)
 
-        self.assertEqual(updated_status.name, params['name'])
+        self.assertEqual(updated_status.name, self.test_form_data['name'])
 
 
-class StatusDelete(CustomTestCase):
+class TestStatusDelete(TestStatusesMixin, TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.url = reverse('status_delete', args=[cls.test_status.id])
+
     def test_get(self):
-        self.client.force_login(self.test_user)
-        response = self.client.get(
-            reverse('status_delete', args=[self.test_status1.id])
-        )
-
+        response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
 
     def test_post(self):
-        self.client.force_login(self.test_user)
-        response = self.client.post(
-            reverse('status_delete', args=[self.test_status2.id])
-        )
+        response = self.client.post(self.url)
 
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('statuses_index'))
+        self.assertRedirects(response, reverse('statuses_list'))
         with self.assertRaises(ObjectDoesNotExist):
-            Status.objects.get(id=self.test_status2.id)
+            Status.objects.get(id=self.test_status.id)

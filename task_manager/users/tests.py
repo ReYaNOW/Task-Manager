@@ -1,116 +1,119 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
-from django.test import TestCase, Client
+from django.test import TestCase
 from django.urls import reverse
 
-
-def get_test_user_data():
-    return {
-        'username': 'username',
-        'first_name': 'first_name',
-        'last_name': 'last_name',
-        'password': 'password',
-    }
+from task_manager.mixins import SetUpLoggedUserMixin
 
 
-def get_test_user_form_data():
-    return {
-        'username': 'Tota',
-        'first_name': 'To',
-        'last_name': 'Ta',
-        'password1': 'TotaTota',
-        'password2': 'TotaTota',
-    }
+class TestUsersMixin(SetUpLoggedUserMixin):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.test_data = {
+            'username': 'username2',
+            'first_name': 'first_name',
+            'last_name': 'last_name',
+            'password': 'password',
+        }
+        cls.test_user2 = get_user_model().objects.create_user(**cls.test_data)
+
+        cls.test_form_data = {
+            'username': 'Tota',
+            'first_name': 'To',
+            'last_name': 'Ta',
+            'password1': 'TotaTota',
+            'password2': 'TotaTota',
+        }
 
 
-class CustomTestCase(TestCase):
-    def setUp(self):
-        self.client = Client()
-        test_user = get_test_user_data()
-        self.test_user = User.objects.create_user(**test_user)
-        test_user['username'] = 'username2'
-        self.test_user2 = User.objects.create_user(**test_user)
+class TestUserListView(SetUpLoggedUserMixin, TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.url = reverse('users_list')
+
+    def test_index_view_get(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+
+        self.client.logout()
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
 
 
-class UsersCreate(CustomTestCase, TestCase):
-    def setUp(self):
-        self.client = Client()
+class TestUsersCreate(TestUsersMixin, TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.url = reverse('user_create')
 
     def test_get(self):
-        response = self.client.get(reverse('user_create'))
+        response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
 
     def test_post(self):
-        user_data = get_test_user_form_data()
-        before_creation = User.objects.count()
-        response = self.client.post(reverse('user_create'), data=user_data)
+        before_create = get_user_model().objects.count()
+        response = self.client.post(self.url, data=self.test_form_data)
 
-        self.assertTrue(User.objects.count() == before_creation + 1)
+        self.assertTrue(get_user_model().objects.count() == before_create + 1)
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('login'))
 
 
-class UsersUpdate(CustomTestCase):
-    def test_get(self):
-        self.client.force_login(self.test_user)
-        response = self.client.get(
-            reverse('user_update', args=[self.test_user.id])
-        )
+class TestUsersUpdate(TestUsersMixin, TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.url = reverse('user_update', args=[cls.logged_user.id])
 
+    def test_get(self):
+        response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
 
     def test_user_update_without_auth(self):
-        test_user = get_test_user_form_data()
-        self.client.post(reverse('user_create'), data=test_user)
-        response = self.client.get(
-            reverse('user_update', args=[self.test_user.id])
-        )
+        self.client.logout()
+        response = self.client.get(self.url)
 
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('login'))
 
     def test_user_update_other_user(self):
-        self.client.force_login(self.test_user2)
         response = self.client.get(
-            reverse('user_update', args=[self.test_user.id])
+            reverse('user_update', args=[self.test_user2.id])
         )
 
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('users_index'))
+        self.assertRedirects(response, reverse('users_list'))
 
     def test_post(self):
-        self.client.force_login(self.test_user)
-        params = get_test_user_form_data()
-        response = self.client.post(
-            reverse('user_update', args=[self.test_user.id]), data=params
-        )
+        response = self.client.post(self.url, data=self.test_form_data)
 
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('users_index'))
+        self.assertRedirects(response, reverse('users_list'))
 
-        updated_user = User.objects.get(id=self.test_user.id)
+        updated_user = get_user_model().objects.get(id=self.logged_user.id)
+        params = self.test_form_data
 
         self.assertEqual(updated_user.username, params['username'])
         self.assertEqual(updated_user.first_name, params['first_name'])
         self.assertEqual(updated_user.last_name, params['last_name'])
 
 
-class UsersDelete(CustomTestCase):
-    def test_get(self):
-        self.client.force_login(self.test_user)
-        response = self.client.get(
-            reverse('user_delete', args=[self.test_user.id])
-        )
+class TestUsersDelete(TestUsersMixin, TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.url = reverse('user_delete', args=[cls.logged_user.id])
 
+    def test_get(self):
+        response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
 
     def test_post(self):
-        self.client.force_login(self.test_user2)
-        response = self.client.post(
-            reverse('user_delete', args=[self.test_user2.id])
-        )
+        response = self.client.post(self.url)
 
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('users_index'))
+        self.assertRedirects(response, reverse('users_list'))
         with self.assertRaises(ObjectDoesNotExist):
-            User.objects.get(id=self.test_user2.id)
+            get_user_model().objects.get(id=self.logged_user.id)
