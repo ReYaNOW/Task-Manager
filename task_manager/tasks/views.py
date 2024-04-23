@@ -36,7 +36,7 @@ class TaskCreateView(
     CustomLoginRequiredMixin, SuccessMessageMixin, CreateView
 ):
     template_name = 'crud_parts/create.html'
-    extra_context = {'title': _('Create task')}
+    extra_context = {'title': _('Create task'), 'button_text': _('Create')}
 
     model = Task
     form_class = TaskCreateForm

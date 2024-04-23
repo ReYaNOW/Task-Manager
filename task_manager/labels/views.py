@@ -22,7 +22,7 @@ class LabelCreateView(
     CustomLoginRequiredMixin, SuccessMessageMixin, CreateView
 ):
     template_name = 'crud_parts/create.html'
-    extra_context = {'title': _('Create label')}
+    extra_context = {'title': _('Create label'), 'button_text': _('Create')}
 
     model = Label
     form_class = LabelCreateForm

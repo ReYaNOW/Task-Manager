@@ -21,7 +21,7 @@ class UserListView(ListView):
 
 class UserCreateView(SuccessMessageMixin, CreateView):
     template_name = 'crud_parts/create.html'
-    extra_context = {'title': _('Sign Up')}
+    extra_context = {'title': _('Sign Up'), 'button_text': _('Sign up')}
 
     model = User
     form_class = UserCreateForm
