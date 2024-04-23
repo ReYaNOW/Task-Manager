@@ -1,7 +1,7 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from task_manager.users.models import UserFullName
 from task_manager.statuses.models import Status
 from task_manager.labels.models import Label
 
@@ -12,7 +12,7 @@ class Task(models.Model):
     )
     description = models.TextField(blank=True, verbose_name=_('Description'))
     author = models.ForeignKey(
-        UserFullName,
+        User,
         on_delete=models.PROTECT,
         verbose_name=_('Author'),
         related_name='author',
@@ -21,7 +21,7 @@ class Task(models.Model):
         Status, on_delete=models.PROTECT, verbose_name=_('Status')
     )
     executor = models.ForeignKey(
-        UserFullName,
+        User,
         blank=True,
         null=True,
         on_delete=models.PROTECT,
@@ -37,6 +37,9 @@ class Task(models.Model):
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
 
 
 class TaskLabelThrough(models.Model):

@@ -1,9 +1,9 @@
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 
-class UserFullName(User):
-    class Meta:
-        proxy = True
+def get_full_name(self):
+    return f'{self.first_name} {self.last_name}'
 
-    def __str__(self):
-        return self.get_full_name()
+
+get_user_model().add_to_class('__str__', get_full_name)
