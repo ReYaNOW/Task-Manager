@@ -1,6 +1,5 @@
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView, LogoutView
-from django.shortcuts import render
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import TemplateView
 

@@ -16,7 +16,7 @@ import dj_database_url
 
 try:
     from dotenv import load_dotenv
-    
+
     load_dotenv()
 except ModuleNotFoundError:
     pass
@@ -102,7 +102,7 @@ DATABASES = {'default': dj_database_url.config()}
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.'
-                'MinimumLengthValidator',
+        'MinimumLengthValidator',
         "OPTIONS": {
             "min_length": 3,
         },
