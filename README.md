@@ -3,8 +3,10 @@
 ![Maintainability](https://api.codeclimate.com/v1/badges/f6133a440607757eed8c/maintainability)](https://codeclimate.com/github/ReYaNOW/python-project-52/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/f6133a440607757eed8c/test_coverage)](https://codeclimate.com/github/ReYaNOW/python-project-52/test_coverage)
 ![Static Badge](https://img.shields.io/badge/Lines_of_Code-1.3k-blue)
+<p align="center">
+  <img src="https://github.com/ReYaNOW/ReYaNOW/blob/main/task_manager_logo.png?raw=true" alt="image"/>
+</p>
 
-[Deployed app](https://task-manager-hexlet.onrender.com)
 
 Task Manager – система управления задачами,
 подобная [Redmine](http://www.redmine.org/).
