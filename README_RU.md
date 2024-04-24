@@ -7,45 +7,44 @@
   <img src="https://github.com/ReYaNOW/ReYaNOW/blob/main/task_manager_logo_blue.png?raw=true" alt="image"/>
 </p>
 
-<p align="center"><b>EN</b> | <a href="https://github.com/ReYaNOW/python-project-52/blob/main/README_RU.md"><b>RU</b></a></p>
+<p align="center"><a href="https://github.com/ReYaNOW/python-project-52/blob/main/README.md"><b>EN</b></a> | <b>RU</b></p>
 
-
-Task Manager is a task management system similar
-to [Redmine](http://www.redmine.org/).
-It allows you to set tasks, assign performers and change their statuses.
-Registration and authentication are required to work with the system.
+Task Manager – система управления задачами,
+подобная [Redmine](http://www.redmine.org/).
+Она позволяет ставить задачи, назначать исполнителей и менять их статусы.
+Для работы с системой требуется регистрация и аутентификация
 
 ![demo image](https://github.com/ReYaNOW/ReYaNOW/blob/main/task_manager_preview.png?raw=true)
 
-# Usage
+# Использование
 
-Open deployed on render.com
-[test example](https://task-manager-hexlet.onrender.com/)
+Открыть задеплоенный на render.com
+[тестовый вариант](https://task-manager-hexlet.onrender.com/)
 
-### Or deploy the application locally
+### Либо развернуть приложение локально
 
-1. Clone repository
+1. Склонировать репозиторий
 
 ```
 git clone https://github.com/ReYaNOW/python-project-52.git
 ```
 
-2. If you need to use your own PostgreSQL db, then you have to create
+2. Если нужно использовать свою БД PostgreSQL, тогда необходимо составить
    database url.
-   Below is the format of such a link.
+   Ниже представлен формат такой ссылки.
 
 ```
 postgresql://[user][:password]@[hostname][:port][/dbname]
 ```
 
-Otherwise, django will create the SQLite3 db itself.
+В ином случае django сам создаст БД SQLite3
 
-3. Create a .env file in the root directory of the project with something like
-   this content.
-    - If you are not using your own database, then DATABASE_URL can be omitted
-    - You can specify ROLLBAR_ACCESS_TOKEN, which you can get from
-      [Rollbar](https://rollbar.com/), to track errors in
-      production environment
+3. Создать файл .env в корневой директории проекта примерно c таким
+   содержанием.
+    - Если не используете свою БД, то DATABASE_URL можно не указывать
+    - Можно указать ROLLBAR_ACCESS_TOKEN, который вы можно получить
+      с [Rollbar](https://rollbar.com/), для отслеживания ошибок в production
+      среде
 
 ```dotenv
 DATABASE_URL=postgres://user:password@localhost:5432/dbname
@@ -54,31 +53,31 @@ SECRET_KEY=yoursecretkey
 DEBUG=True
 ```  
 
-Install dependencies and apply django migrations to the DB
+Установить зависимости и применить django миграции к БД
 
 ```
 make install
 ```
 
-Launch a local server for development
+Запустить локальный сервер для разработки
 
 ```
 make dev
 ```  
 
-or deploy the project using the gunicorn server locally or for example,
-on [render.com](https://render.com/)
+Либо задеплоить проект при помощи сервера gunicorn локально или например,
+на [render.com](https://render.com/)
 
 ```
 make start
 ```  
 
-### Minimum Requirements:
+### Минимальные требования:
 
 - [Python^3.10](https://www.python.org/)
 - [Poetry](https://python-poetry.org/)
 
-#### Python libraries:
+#### Библиотеки Python:
 
 - [Django](https://pypi.org/project/Django/)
 - [Psycopg2-binary](https://pypi.org/project/psycopg2-binary/)
@@ -91,7 +90,7 @@ make start
 - [Django-extensions](https://pypi.org/project/django-extensions/)
 - [Django-bootstrap5](https://pypi.org/project/django-bootstrap5/)
 
-##### For development:
+##### Для разработки
 
 - [Python-dotenv](https://pypi.org/project/python-dotenv/)
 - [Flake8](https://pypi.org/project/flake8/)
