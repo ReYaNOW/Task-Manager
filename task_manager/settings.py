@@ -33,7 +33,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['127.0.0.1', 'webserver', '.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'webserver', '.onrender.com']
 
 # Application definition
 
@@ -153,5 +153,5 @@ ROLLBAR = {
     'access_token': os.getenv('ROLLBAR_ACCESS_TOKEN'),
     'environment': 'development' if DEBUG else 'production',
     'code_version': '1.0',
-    'root': BASE_DIR,
+    'root': str(BASE_DIR),
 }
