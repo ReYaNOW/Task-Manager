@@ -91,7 +91,7 @@ make start
 - [Django-extensions](https://pypi.org/project/django-extensions/)
 - [Django-bootstrap5](https://pypi.org/project/django-bootstrap5/)
 
-##### For development:
+#### For development:
 
 - [Python-dotenv](https://pypi.org/project/python-dotenv/)
 - [Flake8](https://pypi.org/project/flake8/)
