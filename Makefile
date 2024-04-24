@@ -2,11 +2,11 @@ PORT ?= 8080
 
 
 install:
-	poetry install --no-dev
+	poetry install
 	make migrate
 
 install_no_dev:
-	poetry install --no-dev
+	poetry install --only main
 	make migrate
 
 dev:
