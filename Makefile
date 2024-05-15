@@ -9,8 +9,25 @@ install_no_dev:
 	poetry install --only main
 	make migrate
 
+compose_setup:
+	docker compose build
+	docker compose run --rm django make migrate
+
+compose_start:
+	docker compose up --abort-on-container-exit || true
+
+compose_deploy:
+	docker compose up --abort-on-container-exit --no-start
+	docker compose run -p $(PORT):$(PORT) django make start
+
+compose_down:
+	docker compose down --remove-orphans || true
+
+compose_stop:
+	docker compose stop || true
+
 dev:
-	poetry run python3 manage.py runserver $(PORT)
+	poetry run python manage.py runserver 0.0.0.0:$(PORT)
 
 start:
 	poetry run gunicorn -w 5 -b 0.0.0.0:$(PORT) task_manager.wsgi:application
