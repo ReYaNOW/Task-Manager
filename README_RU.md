@@ -23,7 +23,7 @@ Task Manager – система управления задачами,
 
 ![demo image](https://github.com/ReYaNOW/ReYaNOW/blob/main/task_manager_preview.png?raw=true)
 
-### Как развернуть приложение с Docker
+## Как развернуть приложение с Docker
 1. Склонировать репозиторий
 
 ```
@@ -39,7 +39,7 @@ make compose_setup
 или при помощи ``make compose_deploy`` для деплоя в продакшн
 
 
-### Как развернуть приложение без Docker
+## Как развернуть приложение без Docker
 1. Склонировать репозиторий
 
 ```
