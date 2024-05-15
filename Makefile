@@ -5,26 +5,32 @@ install:
 	poetry install
 	make migrate
 
-install_no_dev:
+install-no-dev:
 	poetry install --only main
 	make migrate
 
-compose_setup:
+compose-setup:
 	docker compose build
 	docker compose run --rm django make migrate
 
-compose_start:
+compose-start:
 	docker compose up --abort-on-container-exit || true
 
-compose_prod:
-	docker compose up --abort-on-container-exit --no-start
-	docker compose run -p $(PORT):$(PORT) django make start
+compose-prod:
+	docker compose up --no-start
+	docker compose run -p $(PORT):$(PORT) django make start || true
+	make compose-stop
 
-compose_down:
+compose-down:
 	docker compose down --remove-orphans || true
 
-compose_stop:
+compose-stop:
 	docker compose stop || true
+
+enter-db:
+	docker compose up --abort-on-container-exit --no-start
+	docker compose start db
+	docker compose exec -it db psql -U pguser -d pgdb psql
 
 dev:
 	poetry run python manage.py runserver 0.0.0.0:$(PORT)

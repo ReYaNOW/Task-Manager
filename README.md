@@ -34,10 +34,10 @@ git clone https://github.com/ReYaNOW/python-project-52.git
 2. Install dependencies and apply migrations to the database
   
 ```
-make compose_setup
+make compose-setup
 ```
-3. Start with ``make compose_start`` for development
-or using ``make compose_deploy`` for deployment to production
+3. Start with ``make compose-start`` for development
+or using ``make compose-deploy`` for deployment to production
 
 ## How to deploy app without Docker
 

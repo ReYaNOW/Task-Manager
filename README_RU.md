@@ -33,10 +33,10 @@ git clone https://github.com/ReYaNOW/python-project-52.git
 2. Установить зависимости и применить миграции к БД
   
 ```
-make compose_setup
+make compose-setup
 ```
-3. Запустить при помощи ``make compose_start`` для разработки
-или при помощи ``make compose_prod`` для деплоя в продакшн
+3. Запустить при помощи ``make compose-start`` для разработки
+или при помощи ``make compose-prod`` для деплоя в продакшн
 
 
 ## Как развернуть приложение без Docker
