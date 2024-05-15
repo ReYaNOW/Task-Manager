@@ -15,7 +15,7 @@ WORKDIR /usr/local/src/task_manager
 
 COPY . .
 
-RUN apt-get update && apt-get install -y curl make git
+RUN apt-get update && apt-get install -y curl make git gettext
 RUN curl -sSL https://install.python-poetry.org | python3 -
 RUN git config --global --add safe.directory `pwd`
 RUN poetry install
