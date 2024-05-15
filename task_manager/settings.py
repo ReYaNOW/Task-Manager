@@ -33,7 +33,13 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'webserver', '.onrender.com']
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    '0.0.0.0',
+    'webserver',
+    '.onrender.com',
+]
 
 # Application definition
 
@@ -102,8 +108,8 @@ elif os.getenv('IN_DOCKER'):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.getenv('POSTGRES_DB', 'postgres'),
-            'USER': os.getenv('POSTGRES_USER', 'postgres'),
+            'NAME': os.getenv('POSTGRES_DB', 'pgdb'),
+            'USER': os.getenv('POSTGRES_USER', 'pguser'),
             'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'password'),
             'HOST': os.getenv('POSTGRES_HOST', 'postgres'),
             'PORT': os.getenv('POSTGRES_PORT', '5432'),
