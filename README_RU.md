@@ -36,7 +36,7 @@ git clone https://github.com/ReYaNOW/python-project-52.git
 make compose_setup
 ```
 3. Запустить при помощи ``make compose_start`` для разработки
-или при помощи ``make compose_deploy`` для деплоя в продакшн
+или при помощи ``make compose_prod`` для деплоя в продакшн
 
 
 ## Как развернуть приложение без Docker

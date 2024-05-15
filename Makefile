@@ -16,7 +16,7 @@ compose_setup:
 compose_start:
 	docker compose up --abort-on-container-exit || true
 
-compose_deploy:
+compose_prod:
 	docker compose up --abort-on-container-exit --no-start
 	docker compose run -p $(PORT):$(PORT) django make start
 
