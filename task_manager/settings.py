@@ -95,7 +95,6 @@ WSGI_APPLICATION = 'task_manager.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 
-
 if os.getenv('DATABASE_URL') and not os.getenv('IN_DOCKER'):
     DATABASES = {'default': dj_database_url.config()}
 
