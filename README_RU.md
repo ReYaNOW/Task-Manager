@@ -6,7 +6,7 @@
 <p align="center">
   <img src="https://github.com/ReYaNOW/ReYaNOW/blob/main/task_manager_logo_blue.png?raw=true" alt="image"/>
 </p>
-
+  
 <p align="center"><a href="https://github.com/ReYaNOW/python-project-52/blob/main/README.md"><b>EN</b></a> | <b>RU</b></p>
 
 Task Manager – система управления задачами,
@@ -14,15 +14,32 @@ Task Manager – система управления задачами,
 Она позволяет ставить задачи, назначать исполнителей и менять их статусы.
 Для работы с системой требуется регистрация и аутентификация
 
-![demo image](https://github.com/ReYaNOW/ReYaNOW/blob/main/task_manager_preview.png?raw=true)
-
 # Использование
 
-Открыть задеплоенный на render.com
-[тестовый вариант](https://task-manager-hexlet.onrender.com/)
 
-### Либо развернуть приложение локально
+ - Открыть задеплоенный на render.com [тестовый вариант](https://task-manager-hexlet.onrender.com/)
+ - [Развернуть приложение с Docker](#Как-развернуть-приложение-с-Docker)  
+ - [Развернуть приложение без Docker](#Как-развернуть-приложение-без-Docker)
 
+![demo image](https://github.com/ReYaNOW/ReYaNOW/blob/main/task_manager_preview.png?raw=true)
+
+### Как развернуть приложение с Docker
+1. Склонировать репозиторий
+
+```
+git clone https://github.com/ReYaNOW/python-project-52.git
+```
+
+2. Установить зависимости и применить миграции к БД
+  
+```
+make compose_setup
+```
+3. Запустить при помощи ``make compose_start`` для разработки
+или при помощи ``make compose_deploy`` для деплоя в продакшн
+
+
+### Как развернуть приложение без Docker
 1. Склонировать репозиторий
 
 ```
