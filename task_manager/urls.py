@@ -29,3 +29,6 @@ urlpatterns = [
     path('tasks/', include('task_manager.tasks.urls')),
     path('admin/', admin.site.urls),
 ]
+
+handler404 = views.Error404View.as_view()
+handler500 = views.Error500View.as_view()
