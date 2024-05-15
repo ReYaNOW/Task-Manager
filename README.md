@@ -15,14 +15,31 @@ to [Redmine](http://www.redmine.org/).
 It allows you to set tasks, assign performers and change their statuses.
 Registration and authentication are required to work with the system.
 
-![demo image](https://github.com/ReYaNOW/ReYaNOW/blob/main/task_manager_preview.png?raw=true)
-
 # Usage
 
-Open deployed on render.com
-[test example](https://task-manager-hexlet.onrender.com/)
 
-### Or deploy the application locally
+ - Open deployed on render.com [test example](https://task-manager-hexlet.onrender.com/)
+ - [Deploy an application with Docker](#How-to-deploy-app-with-Docker)  
+ - [Deploy an application without Docker](#Как-развернуть-приложение-без-Docker)
+
+![demo image](https://github.com/ReYaNOW/ReYaNOW/blob/main/task_manager_preview.png?raw=true)
+
+## How to deploy app with Docker
+1. Clone repository
+
+```
+git clone https://github.com/ReYaNOW/python-project-52.git
+```
+
+2. Install dependencies and apply migrations to the database
+  
+```
+make compose_setup
+```
+3. Start with ``make compose_start`` for development
+or using ``make compose_deploy`` for deployment to production
+
+## How to deploy app without Docker
 
 1. Clone repository
 
@@ -42,7 +59,7 @@ Otherwise, django will create the SQLite3 db itself.
 
 3. Create a .env file in the root directory of the project with something like
    this content.
-    - If you are not using your own database, then DATABASE_URL can be omitted
+    - If you are not using your own database, then the DATABASE_URL can be omitted
     - You can specify ROLLBAR_ACCESS_TOKEN, which you can get from
       [Rollbar](https://rollbar.com/), to track errors in
       production environment
