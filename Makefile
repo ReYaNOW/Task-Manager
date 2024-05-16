@@ -11,14 +11,14 @@ install-no-dev:
 
 compose-setup:
 	docker compose build
-	docker compose run --rm django make migrate
+	docker compose run --rm web make migrate
 
 compose-start:
 	docker compose up --abort-on-container-exit || true
 
 compose-prod:
 	docker compose up --no-start
-	docker compose run -p $(PORT):$(PORT) django make start || true
+	docker compose run -p $(PORT):$(PORT) web make start || true
 	make compose-stop
 
 compose-down:
