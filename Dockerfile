@@ -1,4 +1,4 @@
-FROM python:3.11.5-slim
+FROM python:3.12-slim
 
 ENV PYTHONFAULTHANDLER=1 \
     PYTHONUNBUFFERED=1 \
@@ -14,8 +14,11 @@ ENV PYTHONFAULTHANDLER=1 \
 WORKDIR /usr/local/src/task_manager
 
 RUN apt-get update && apt-get install -y curl make git gettext \
-    && curl -sSL https://install.python-poetry.org | python3 - \
-    && git config --global --add safe.directory `pwd`
+    && curl -sSL https://install.python-poetry.org | python3 -
+
+COPY pyproject.toml poetry.lock ./
+
+RUN poetry install --no-root
 
 COPY . .
 RUN poetry install
