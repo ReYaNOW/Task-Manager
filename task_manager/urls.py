@@ -28,6 +28,7 @@ urlpatterns = [
     path('labels/', include('task_manager.labels.urls')),
     path('tasks/', include('task_manager.tasks.urls')),
     path('admin/', admin.site.urls),
+    path('__debug__/', include('debug_toolbar.urls')),
 ]
 
 handler404 = views.Error404View.as_view()

@@ -77,6 +77,20 @@ if not DEBUG:
         'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
     )
 
+# Django Debug Toolbar Settings
+if DEBUG:
+    INSTALLED_APPS += [
+        'debug_toolbar',
+    ]
+
+    MIDDLEWARE += [
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+    ]
+
+    INTERNAL_IPS = [
+        '127.0.0.1',
+    ]
+
 ROOT_URLCONF = 'task_manager.urls'
 
 TEMPLATES = [
