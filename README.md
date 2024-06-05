@@ -106,7 +106,6 @@ make start
 - [dj-database-url](https://pypi.org/project/dj-database-url/)
 - [Django-filter](https://pypi.org/project/django-filter/)
 - [Django-extensions](https://pypi.org/project/django-extensions/)
-- [Django-bootstrap5](https://pypi.org/project/django-bootstrap5/)
 
 #### For development:
 
