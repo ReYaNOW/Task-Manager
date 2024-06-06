@@ -20,7 +20,7 @@ Registration and authentication are required to work with the system.
 
  - Open deployed on render.com [test example](https://task-manager-hexlet.onrender.com/)
  - [Deploy an application with Docker](#How-to-deploy-app-with-Docker)  
- - [Deploy an application without Docker](#Как-развернуть-приложение-без-Docker)
+ - [Deploy an application without Docker](#How-to-deploy-app-without-Docker)
 
 ![demo image](https://github.com/ReYaNOW/ReYaNOW/blob/main/task_manager_preview.png?raw=true)
 
