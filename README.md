@@ -18,7 +18,7 @@ Registration and authentication are required to work with the system.
 # Usage
 
 
- - Open deployed on render.com [test example](https://task-manager-hexlet.onrender.com/)
+ - Open deployed on render.com [test example](https://task-manager-hexlet-test.onrender.com/)
  - [Deploy an application with Docker](#How-to-deploy-app-with-Docker)  
  - [Deploy an application without Docker](#How-to-deploy-app-without-Docker)
 
