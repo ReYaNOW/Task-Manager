@@ -9,7 +9,7 @@
 <p align="center"><b>EN</b> | <a href="https://github.com/ReYaNOW/python-project-52/blob/main/README_RU.md"><b>RU</b></a></p>
 
 
-Task Manager is a task management system similar
+Task Manager is the task management system similar
 to [Redmine](http://www.redmine.org/).
 It allows you to set tasks, assign performers and change their statuses.
 Registration and authentication are required to work with the system.
